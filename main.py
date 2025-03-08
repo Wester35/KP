@@ -7,20 +7,16 @@ from PySide6.QtGui import QPixmap
 class LoginApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        # Создаём объект интерфейса
         self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)  # Подключаем интерфейс к окну
+        self.ui.setupUi(self)
 
-        # Подключаем кнопку
-    #     self.ui.loginButton.clicked.connect(self.handle_login)
-    #
-    #     # Загружаем картинку в QLabel
-    #     self.ui.myLabel.setPixmap(QPixmap("path/to/image.png"))
-    #
-    # def handle_login(self):
-    #     login = self.ui.loginInput.text()
-    #     password = self.ui.passwordInput.text()
-    #     print(f"Логин: {login}, Пароль: {password}")  # Можно заменить на реальную проверку
+        #Подключение кнопок
+        self.ui.pushButton.clicked.connect(self.handle_login)
+
+        self.ui.toolButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+
+    def handle_login(self):
+        pass
 
 
 if __name__ == "__main__":

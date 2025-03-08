@@ -106,8 +106,8 @@ border-radius:60px;
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="resources/resource.qrc">
-      <normaloff>:/images/free-icon-login-1674704.png</normaloff>:/images/free-icon-login-1674704.png</iconset>
+     <iconset>
+      <normaloff>resources/free-icon-login-1674704.png</normaloff>resources/free-icon-login-1674704.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -119,8 +119,6 @@ border-radius:60px;
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="resources/resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

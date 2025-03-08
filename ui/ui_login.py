@@ -18,7 +18,6 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QStatusBar, QToolButton,
     QWidget)
-#import resource_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -75,7 +74,7 @@ class Ui_MainWindow(object):
         self.toolButton.setObjectName(u"toolButton")
         self.toolButton.setGeometry(QRect(130, 10, 121, 121))
         icon = QIcon()
-        icon.addFile(u":/images/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"resources/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.toolButton.setIcon(icon)
         self.toolButton.setIconSize(QSize(78, 78))
         MainWindow.setCentralWidget(self.centralwidget)
