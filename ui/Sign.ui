@@ -6,12 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>501</height>
+    <width>501</width>
+    <height>532</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>501</width>
+    <height>532</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>501</width>
+    <height>532</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Authorization</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../Downloads/free-icon-login-1674704.png</normaloff>../../../Downloads/free-icon-login-1674704.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">*
@@ -20,39 +36,69 @@
 	font-size:24px;
 }
 
-QFrame
+#frame
 {
 	background:#333;
 	border-radius:15px;
 }
 
+#frame_2
+{
+	background:url(C:\Users\Wester35\Downloads\sgustok_fraktal_sirenevyj_132619_1600x1200.jpg);
+	border-radius:10px;
+}
+
 QPushButton
 {
 color:white;
-/*background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.545, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 255, 0, 255));   url(:/images/free-icon-login-1674704.png)*/
-	background:red;
-	border-radius:15px;
+background:#4B0082;
+border-radius:15px;
 }
 
 QPushButton:hover
 {
-	color:red;
+	color:#4B0082;
 	background:#333;
 	border-radius:15px;
 }
 
 QToolButton
 {
-background:red;
+background:#4B0082;
 border-radius:60px;
+}
+
+QMainWindow
+{
+background:url('resources/sgustok_fraktal_sirenevyj_132619_1600x1200.jpg');
+}
+
+QLineEdit
+{
+background:transparent;
+border:none;
+color:#717072;
+border-bottom:1px solid #717072;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>501</width>
+     <height>532</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>501</width>
+     <height>532</height>
+    </size>
+   </property>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>80</y>
+      <x>70</x>
+      <y>110</y>
       <width>361</width>
       <height>361</height>
      </rect>
@@ -92,12 +138,47 @@ border-radius:60px;
       <string>Log In</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="usernameEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>321</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Username</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="passwordEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>321</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Password</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>10</y>
+      <x>190</x>
+      <y>40</y>
       <width>121</width>
       <height>121</height>
      </rect>
@@ -116,8 +197,38 @@ border-radius:60px;
      </size>
     </property>
    </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>501</width>
+      <height>532</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>501</width>
+      <height>532</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>501</width>
+      <height>532</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+   </widget>
+   <zorder>frame_2</zorder>
+   <zorder>frame</zorder>
+   <zorder>toolButton</zorder>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
