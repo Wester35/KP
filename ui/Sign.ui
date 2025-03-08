@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>382</width>
+    <height>501</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Authorization</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*
+{
+	font-family:Comic Sans MS;
+	font-size:24px;
+}
+
+QFrame
+{
+	background:#333;
+	border-radius:15px;
+}
+
+QPushButton
+{
+color:white;
+/*background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.545, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 255, 0, 255));   url(:/images/free-icon-login-1674704.png)*/
+	background:red;
+	border-radius:15px;
+}
+
+QPushButton:hover
+{
+	color:red;
+	background:#333;
+	border-radius:15px;
+}
+
+QToolButton
+{
+background:red;
+border-radius:60px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>361</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>50</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Login here</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>341</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Log In</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>10</y>
+      <width>121</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources/resource.qrc">
+      <normaloff>:/images/free-icon-login-1674704.png</normaloff>:/images/free-icon-login-1674704.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="resources/resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>
