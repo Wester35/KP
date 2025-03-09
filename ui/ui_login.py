@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
 "#frame\n"
 "{\n"
 "	background:#333;\n"
-"	border-radius:15px;\n"
+"	border-radius:22px;\n"
 "}\n"
 "\n"
 "#frame_2\n"
@@ -47,18 +47,26 @@ class Ui_MainWindow(object):
 "	border-radius:10px;\n"
 "}\n"
 "\n"
-"QPushButton\n"
+"#pushButton\n"
 "{\n"
 "color:white;\n"
 "background:#4B0082;\n"
 "border-radius:15px;\n"
+"transition: background 1s;\n"
 "}\n"
 "\n"
-"QPushButton:hover\n"
+"#pushButton:hover\n"
 "{\n"
 "	color:#4B0082;\n"
-"	background:#333;\n"
+"	background:#696969;\n"
 "	border-radius:15px;\n"
+"\n"
+"}\n"
+"\n"
+"#pushButton:pressed \n"
+"{\n"
+"background-color: #483D8B;\n"
+"transform: scale(0.9);\n"
 "}\n"
 "\n"
 "QToolButton\n"
@@ -78,6 +86,27 @@ class Ui_MainWindow(object):
 "border:none;\n"
 "color:#717072;\n"
 "border-bottom:1px solid #717072;\n"
+"}\n"
+"\n"
+"#checkPassword\n"
+"{\n"
+"background:#333;\n"
+"col"
+                        "or:white;\n"
+"border-radius:15px;\n"
+"transition: background 1s;\n"
+"}\n"
+"\n"
+"#checkPassword:hover\n"
+"{\n"
+"background:#4B0082;\n"
+"border-radius:15px;\n"
+"}\n"
+"\n"
+"#checkPassword:pressed\n"
+"{\n"
+"background:#483D8B;\n"
+"transform: scale(0.9);\n"
 "}")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -101,6 +130,10 @@ class Ui_MainWindow(object):
         self.passwordEdit = QLineEdit(self.frame)
         self.passwordEdit.setObjectName(u"passwordEdit")
         self.passwordEdit.setGeometry(QRect(20, 200, 321, 22))
+        self.passwordEdit.setEchoMode(QLineEdit.EchoMode.Password)
+        self.checkPassword = QPushButton(self.frame)
+        self.checkPassword.setObjectName(u"checkPassword")
+        self.checkPassword.setGeometry(QRect(310, 190, 31, 31))
         self.toolButton = QToolButton(self.centralwidget)
         self.toolButton.setObjectName(u"toolButton")
         self.toolButton.setGeometry(QRect(190, 40, 121, 121))
@@ -110,9 +143,9 @@ class Ui_MainWindow(object):
         self.toolButton.setIconSize(QSize(78, 78))
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(0, 0, 501, 532))
-        self.frame_2.setMinimumSize(QSize(501, 532))
-        self.frame_2.setMaximumSize(QSize(501, 532))
+        self.frame_2.setGeometry(QRect(0, 0, 501, 520))
+        self.frame_2.setMinimumSize(QSize(501, 520))
+        self.frame_2.setMaximumSize(QSize(501, 520))
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -134,6 +167,7 @@ class Ui_MainWindow(object):
         self.passwordEdit.setInputMask("")
         self.passwordEdit.setText("")
         self.passwordEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Password", None))
+        self.checkPassword.setText("")
         self.toolButton.setText("")
     # retranslateUi
 

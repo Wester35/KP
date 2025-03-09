@@ -39,7 +39,7 @@
 #frame
 {
 	background:#333;
-	border-radius:15px;
+	border-radius:22px;
 }
 
 #frame_2
@@ -48,18 +48,26 @@
 	border-radius:10px;
 }
 
-QPushButton
+#pushButton
 {
 color:white;
 background:#4B0082;
 border-radius:15px;
+transition: background 1s;
 }
 
-QPushButton:hover
+#pushButton:hover
 {
 	color:#4B0082;
-	background:#333;
+	background:#696969;
 	border-radius:15px;
+
+}
+
+#pushButton:pressed 
+{
+background-color: #483D8B;
+transform: scale(0.9);
 }
 
 QToolButton
@@ -79,6 +87,26 @@ background:transparent;
 border:none;
 color:#717072;
 border-bottom:1px solid #717072;
+}
+
+#checkPassword
+{
+background:#333;
+color:white;
+border-radius:15px;
+transition: background 1s;
+}
+
+#checkPassword:hover
+{
+background:#4B0082;
+border-radius:15px;
+}
+
+#checkPassword:pressed
+{
+background:#483D8B;
+transform: scale(0.9);
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -169,8 +197,24 @@ border-bottom:1px solid #717072;
      <property name="text">
       <string/>
      </property>
+     <property name="echoMode">
+      <enum>QLineEdit::EchoMode::Password</enum>
+     </property>
      <property name="placeholderText">
       <string>Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="checkPassword">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>190</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -203,19 +247,19 @@ border-bottom:1px solid #717072;
       <x>0</x>
       <y>0</y>
       <width>501</width>
-      <height>532</height>
+      <height>520</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
       <width>501</width>
-      <height>532</height>
+      <height>520</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
       <width>501</width>
-      <height>532</height>
+      <height>520</height>
      </size>
     </property>
     <property name="frameShape">
