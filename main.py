@@ -1,8 +1,11 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QMessageBox
+
+from libs.models import RoleEnum
 from ui.ui_login import Ui_MainWindow
 from PySide6.QtGui import QPixmap
-from libs.auth import *
+from libs.crud import create_user, get_user_by_username, verify_password
+from libs.database import SessionLocal
 
 
 class LoginApp(QMainWindow):
@@ -26,9 +29,31 @@ class LoginApp(QMainWindow):
         self.ui.checkPassword.setCheckable(True)
         self.ui.checkPassword.clicked.connect(self.check_pwd)
 
-    @staticmethod
-    def handle_login():
-        print("Login")
+    def handle_login(self):
+        username = self.ui.usernameEdit.text()
+        password = self.ui.usernameEdit.text()
+
+        if not username or not password:
+            QMessageBox.warning(self, "Ошибка", "Введите логин и пароль!")
+            return
+
+        db = SessionLocal()
+        user = get_user_by_username(db, username)
+        db.close()
+
+        if user and verify_password(user, password):
+            QMessageBox.information(self, "Успех", f"Добро пожаловать, {user.username}!\nВаша роль: {user.role}")
+            self.open_main_window(user.role)  # Открываем следующее окно по роли
+        else:
+            QMessageBox.critical(self, "Ошибка", "Неверный логин или пароль!")
+    def open_main_window(self, role):
+        # Здесь открывай нужное окно в зависимости от роли
+        if role == "admin":
+            print("Открываю окно администратора")
+        elif role == "teacher":
+            print("Открываю окно учителя")
+        elif role == "student":
+            print("Открываю окно студента")
 
     def check_pwd(self):
         if self.ui.checkPassword.isChecked():
