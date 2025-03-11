@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Sign.ui'
+## Form generated from reading UI file 'authTNtaTh.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -16,20 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
-    QMainWindow, QPushButton, QSizePolicy, QToolButton,
-    QWidget)
+    QPushButton, QSizePolicy, QToolButton, QWidget)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(501, 532)
-        MainWindow.setMinimumSize(QSize(501, 532))
-        MainWindow.setMaximumSize(QSize(501, 532))
-        icon = QIcon()
-        icon.addFile(u"../../../Downloads/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        MainWindow.setWindowIcon(icon)
-        MainWindow.setStyleSheet(u"*\n"
+class Ui_Authorization(object):
+    def setupUi(self, Authorization):
+        if not Authorization.objectName():
+            Authorization.setObjectName(u"Authorization")
+        Authorization.resize(501, 532)
+        Authorization.setMaximumSize(QSize(501, 532))
+        Authorization.setStyleSheet(u"*\n"
 "{\n"
 "	font-family:Comic Sans MS;\n"
 "	font-size:24px;\n"
@@ -108,11 +103,7 @@ class Ui_MainWindow(object):
 "background:#483D8B;\n"
 "transform: scale(0.9);\n"
 "}")
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setMinimumSize(QSize(501, 532))
-        self.centralwidget.setMaximumSize(QSize(501, 532))
-        self.frame = QFrame(self.centralwidget)
+        self.frame = QFrame(Authorization)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(70, 110, 361, 361))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -134,39 +125,38 @@ class Ui_MainWindow(object):
         self.checkPassword = QPushButton(self.frame)
         self.checkPassword.setObjectName(u"checkPassword")
         self.checkPassword.setGeometry(QRect(310, 190, 31, 31))
-        self.toolButton = QToolButton(self.centralwidget)
-        self.toolButton.setObjectName(u"toolButton")
-        self.toolButton.setGeometry(QRect(190, 40, 121, 121))
-        icon1 = QIcon()
-        icon1.addFile(u"resources/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.toolButton.setIcon(icon1)
-        self.toolButton.setIconSize(QSize(78, 78))
-        self.frame_2 = QFrame(self.centralwidget)
+        self.frame_2 = QFrame(Authorization)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(0, 0, 501, 520))
         self.frame_2.setMinimumSize(QSize(501, 520))
         self.frame_2.setMaximumSize(QSize(501, 520))
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.toolButton = QToolButton(Authorization)
+        self.toolButton.setObjectName(u"toolButton")
+        self.toolButton.setGeometry(QRect(190, 40, 121, 121))
+        icon = QIcon()
+        icon.addFile(u"resources/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.toolButton.setIcon(icon)
+        self.toolButton.setIconSize(QSize(78, 78))
         self.frame_2.raise_()
         self.frame.raise_()
         self.toolButton.raise_()
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(Authorization)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(Authorization)
     # setupUi
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Authorization", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Login here", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Log In", None))
+    def retranslateUi(self, Authorization):
+        Authorization.setWindowTitle(QCoreApplication.translate("Authorization", u"Form", None))
+        self.label.setText(QCoreApplication.translate("Authorization", u"Login here", None))
+        self.pushButton.setText(QCoreApplication.translate("Authorization", u"Log In", None))
         self.usernameEdit.setText("")
-        self.usernameEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Username", None))
+        self.usernameEdit.setPlaceholderText(QCoreApplication.translate("Authorization", u"Username", None))
         self.passwordEdit.setInputMask("")
         self.passwordEdit.setText("")
-        self.passwordEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Password", None))
+        self.passwordEdit.setPlaceholderText(QCoreApplication.translate("Authorization", u"Password", None))
         self.checkPassword.setText("")
         self.toolButton.setText("")
     # retranslateUi

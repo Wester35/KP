@@ -1,17 +1,17 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QMessageBox, QWidget
 
 from libs.models import RoleEnum
-from ui.ui_login import Ui_MainWindow
+from ui.ui_login import Ui_Authorization
 from PySide6.QtGui import QPixmap
 from libs.crud import create_user, get_user_by_username, verify_password
 from libs.database import SessionLocal
 
 
-class LoginApp(QMainWindow):
+class LoginApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_Authorization()
         self.ui.setupUi(self)
 
         self.ui.pushButton.clicked.connect(self.handle_login)
