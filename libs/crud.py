@@ -1,14 +1,14 @@
 from sqlalchemy.orm import Session
-from .models import User, Student, Attendance, RoleEnum
+from .models import User, Attendance, RoleEnum
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Добавить студента
-def create_student(db: Session, name: str, group: str):
-    student = Student(name=name, group=group)
-    db.add(student)
-    db.commit()
-    db.refresh(student)
-    return student
+# def create_student(db: Session, name: str, group: str):
+#     student = Student(name=name, group=group)
+#     db.add(student)
+#     db.commit()
+#     db.refresh(student)
+#     return student
 
 
 # Отметить присутствие / опоздание
