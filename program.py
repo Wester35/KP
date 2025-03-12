@@ -1,45 +1,73 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QWidget
-from ui.ui_login import Ui_Authorization as LoginUI  # Ваш класс авторизации
-from ui.ui_main import Ui_MainWindow  # Ваш основной класс
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QWidget, QLabel, QMessageBox, QLineEdit
+from ui.ui_login import Ui_Authorization as LoginUI  # Класс для авторизации
+from ui.w import Ui_Main  # Класс для главного окна
 import sys
 
 
-class MainApp(QMainWindow):
+class MainApp(QWidget):
     def __init__(self):
         super().__init__()
 
-        # Инициализация основного окна (не создаем отдельный QWidget)
-        self.ui = Ui_MainWindow()  # Загружаем UI основного окна
-        self.ui.setupUi(self)  # Применяем UI к основному окну
+        self.ui = Ui_Main()
+        self.ui.setupUi(self)
 
-        # Получаем доступ к QStackedWidget из UI
-        self.stacked_widget = self.ui.stackedWidget
-
-        # Инициализация авторизации
-        self.login_widget = QWidget()  # Создаем виджет для авторизации
-        self.login_ui = LoginUI()  # Загружаем UI авторизации
-        self.login_ui.setupUi(self.login_widget)  # Применяем UI к виджету
-
-        # Добавляем оба виджета в QStackedWidget
-        self.stacked_widget.addWidget(self.login_widget)  # Добавляем окно авторизации
-        self.stacked_widget.addWidget(self)  # Главное окно (self.ui уже применен)
-
-        # Устанавливаем начальный виджет (авторизация)
-        self.stacked_widget.setCurrentWidget(self.login_widget)
-
-        # Привязываем кнопку "Войти" к переключению экранов
-        self.login_ui.pushButton.clicked.connect(self.show_main_window)
+        self.ui.pushButton.clicked.connect(self.show_main_window)
 
     def show_main_window(self):
-        """Переключаем на главное окно после авторизации"""
-        self.stacked_widget.setCurrentWidget(self)  # Главное окно
+        self.close()
+        self.ui = Auth()
+        self.ui.show()
+
+
+class Auth(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.ui = LoginUI()
+        self.ui.setupUi(self)
+
+        self.ui.pushButton.clicked.connect(self.handle_login)
+
+        self.ui.toolButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+
+        self.background = QLabel(self.ui.frame_2)
+        self.background.setGeometry(0, 0, 600, 600)
+
+        pixmap = QPixmap("ui/resources/background.jpg")
+        self.background.setPixmap(pixmap)
+        self.background.setScaledContents(True)
+
+        self.ui.checkPassword.setText("👁️‍🗨️")
+        self.ui.checkPassword.setCheckable(True)
+        self.ui.checkPassword.clicked.connect(self.check_pwd)
+
+    def handle_login(self):
+        username = self.ui.usernameEdit.text()
+        password = self.ui.usernameEdit.text()
+
+        if not username or not password:
+            QMessageBox.warning(self, "Ошибка", "Введите логин и пароль!")
+            return
+
+        if username and password:
+            self.show_main_window()
+
+    def show_main_window(self):
+        self.close()
+        self.ui = MainApp()
+        self.ui.show()
+
+    def check_pwd(self):
+        if self.ui.checkPassword.isChecked():
+            self.ui.passwordEdit.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self.ui.passwordEdit.setEchoMode(QLineEdit.EchoMode.Password)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
-    # Инициализация и запуск приложения
-    main_app = MainApp()
+    main_app = Auth()
     main_app.show()
 
     sys.exit(app.exec())
