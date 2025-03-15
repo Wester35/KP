@@ -1,7 +1,7 @@
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QWidget, QLabel, QMessageBox, QLineEdit
+from PySide6.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QLineEdit
 from ui.ui_login import Ui_Authorization as LoginUI  # Класс для авторизации
-from ui.w import Ui_Main  # Класс для главного окна
+from ui.ui_main import Ui_MainWindow as Ui_Main  # Класс для главного окна
 import sys
 
 
@@ -11,13 +11,16 @@ class MainApp(QWidget):
 
         self.ui = Ui_Main()
         self.ui.setupUi(self)
+        self.ui.comboBox.addItem("ISP-306", "DD")
 
-        self.ui.pushButton.clicked.connect(self.show_main_window)
-
-    def show_main_window(self):
-        self.close()
-        self.ui = Auth()
-        self.ui.show()
+        self.ui.comboBox.addItem("ISP-307", "22")
+        self.ui.tableView
+    #     self.ui.pushButton.clicked.connect(self.show_main_window)
+    #
+    # def show_main_window(self):
+    #     self.close()
+    #     self.ui = Auth()
+    #     self.ui.show()
 
 
 class Auth(QWidget):
@@ -30,7 +33,7 @@ class Auth(QWidget):
         self.ui.pushButton.clicked.connect(self.handle_login)
 
         self.ui.toolButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
-
+        self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.background = QLabel(self.ui.frame_2)
         self.background.setGeometry(0, 0, 600, 600)
 

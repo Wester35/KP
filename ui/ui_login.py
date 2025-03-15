@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'authTNtaTh.ui'
+## Form generated from reading UI file 'authjgoJOL.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -149,7 +149,7 @@ class Ui_Authorization(object):
     # setupUi
 
     def retranslateUi(self, Authorization):
-        Authorization.setWindowTitle(QCoreApplication.translate("Authorization", u"Form", None))
+        Authorization.setWindowTitle(QCoreApplication.translate("Authorization", u"Authorization", None))
         self.label.setText(QCoreApplication.translate("Authorization", u"Login here", None))
         self.pushButton.setText(QCoreApplication.translate("Authorization", u"Log In", None))
         self.usernameEdit.setText("")
