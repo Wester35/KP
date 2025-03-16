@@ -1,7 +1,34 @@
+import json
 from sqlalchemy.orm import Session
+
+from .database import SessionLocal
 from .models import User, Group, Journal
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+
+
+def save_user_session(user_id):
+    with open("user_session.json", "w") as f:
+        json.dump({"user_id": user_id}, f)
+
+
+def load_user_session():
+    try:
+        with open("user_session.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return None
+
+
+def check_if_logged_in():
+    session_data = load_user_session()
+    if session_data:
+        user_id = session_data.get("user_id")
+        db = SessionLocal()
+        user = db.query(User).filter(User.id == user_id).first()
+        if user:
+            return user
+    return None
 
 
 def create_user(session: Session, last_name, first_name, middle_name, phone, login, password, group_id, is_teacher=False, is_admin=False):

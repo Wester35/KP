@@ -4,25 +4,16 @@ from ui.ui_login import Ui_Authorization as LoginUI
 from ui.ui_main import Ui_MainWindow as Ui_Main
 import sys
 from libs.database import SessionLocal
-from libs.crud import authenticate_user
+from libs.crud import authenticate_user, save_user_session, check_if_logged_in, load_user_session
 
 
 class MainApp(QWidget):
     def __init__(self):
         super().__init__()
-
+        self.close()
         self.ui = Ui_Main()
         self.ui.setupUi(self)
-        self.ui.comboBox.addItem("ISP-306", "DD")
-
-        self.ui.comboBox.addItem("ISP-307", "22")
-
-    #     self.ui.pushButton.clicked.connect(self.show_main_window)
-    #
-    # def show_main_window(self):
-    #     self.close()
-    #     self.ui = Auth()
-    #     self.ui.show()
+      
 
 
 class Auth(QWidget):
@@ -56,8 +47,10 @@ class Auth(QWidget):
             return
 
         db = SessionLocal()
-
-        if authenticate_user(db, login, password):
+        user = authenticate_user(db, login, password)
+        if user:
+            if self.ui.checkBox.isChecked():
+                save_user_session(user.id)
             self.show_main_window()
         else:
             QMessageBox.warning(self, "Ошибка", "Неверно")
@@ -76,7 +69,12 @@ class Auth(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_app = Auth()
-    main_app.show()
+    session_data = load_user_session()
+    if session_data and session_data.get("user_id"):
+        main_app = MainApp()
+        main_app.show()
+    else:
+        main_app = Auth()
+        main_app.show()
 
     sys.exit(app.exec())

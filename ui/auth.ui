@@ -97,7 +97,13 @@ border-radius:15px;
 {
 background:#483D8B;
 transform: scale(0.9);
-}</string>
+}
+
+QCheckBox {
+    font-size: 16px;
+}
+
+</string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
@@ -192,6 +198,22 @@ transform: scale(0.9);
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>Remember me?</string>
     </property>
    </widget>
   </widget>

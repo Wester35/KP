@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'authjgoJOL.ui'
+## Form generated from reading UI file 'authOJaJCY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QToolButton, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QToolButton,
+    QWidget)
 
 class Ui_Authorization(object):
     def setupUi(self, Authorization):
@@ -26,7 +27,7 @@ class Ui_Authorization(object):
         Authorization.setMaximumSize(QSize(501, 532))
         Authorization.setStyleSheet(u"*\n"
 "{\n"
-"	font-family:Comic Sans MS;\n"
+"	font-family:century gothic;\n"
 "	font-size:24px;\n"
 "}\n"
 "\n"
@@ -86,8 +87,8 @@ class Ui_Authorization(object):
 "#checkPassword\n"
 "{\n"
 "background:#333;\n"
-"col"
-                        "or:white;\n"
+"co"
+                        "lor:white;\n"
 "border-radius:15px;\n"
 "transition: background 1s;\n"
 "}\n"
@@ -102,7 +103,13 @@ class Ui_Authorization(object):
 "{\n"
 "background:#483D8B;\n"
 "transform: scale(0.9);\n"
-"}")
+"}\n"
+"\n"
+"QCheckBox {\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"")
         self.frame = QFrame(Authorization)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(70, 110, 361, 361))
@@ -110,7 +117,7 @@ class Ui_Authorization(object):
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(120, 50, 121, 41))
+        self.label.setGeometry(QRect(120, 50, 131, 41))
         self.label.setStyleSheet(u"")
         self.pushButton = QPushButton(self.frame)
         self.pushButton.setObjectName(u"pushButton")
@@ -125,6 +132,10 @@ class Ui_Authorization(object):
         self.checkPassword = QPushButton(self.frame)
         self.checkPassword.setObjectName(u"checkPassword")
         self.checkPassword.setGeometry(QRect(310, 190, 31, 31))
+        self.checkBox = QCheckBox(self.frame)
+        self.checkBox.setObjectName(u"checkBox")
+        self.checkBox.setGeometry(QRect(20, 250, 231, 20))
+        self.checkBox.setAcceptDrops(False)
         self.frame_2 = QFrame(Authorization)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(0, 0, 501, 520))
@@ -158,6 +169,7 @@ class Ui_Authorization(object):
         self.passwordEdit.setText("")
         self.passwordEdit.setPlaceholderText(QCoreApplication.translate("Authorization", u"Password", None))
         self.checkPassword.setText("")
+        self.checkBox.setText(QCoreApplication.translate("Authorization", u"Remember me?", None))
         self.toolButton.setText("")
     # retranslateUi
 
