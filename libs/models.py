@@ -1,38 +1,46 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Enum, Boolean, LargeBinary
-from sqlalchemy.orm import relationship
-from datetime import date
-from .database import Base
-import enum
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Date, Time
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 
-class RoleEnum(str, enum.Enum):
-    STUDENT = "student"
-    TEACHER = "teacher"
-    ADMIN = "admin"
+Base = declarative_base()
+
+
+class Group(Base):
+    __tablename__ = 'groups'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
+
+    users = relationship("User", back_populates="group")
 
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, nullable=False)
+    last_name = Column(String, nullable=False)
+    first_name = Column(String, nullable=False)
+    middle_name = Column(String, nullable=True)
+    phone = Column(String, unique=True, nullable=False)
+    login = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    role = Column(Enum(RoleEnum), nullable=False)
+    is_teacher = Column(Boolean, default=False)
+    is_admin = Column(Boolean, default=False)
+    photo = Column(String, nullable=True)
+    group_id = Column(Integer, ForeignKey("groups.id"))
 
-    full_name = Column(String, nullable=False)
-    group = Column(String, nullable=True)
-    photo = Column(LargeBinary, nullable=True)
+    group = relationship("Group", back_populates="users")
 
-    attendance_records = relationship("Attendance", back_populates="student")
+    journal_entries = relationship("Journal", back_populates="user")
 
 
-class Attendance(Base):
-    __tablename__ = "attendance"
+class Journal(Base):
+    __tablename__ = 'journal'
 
-    id = Column(Integer, primary_key=True, index=True)
-    student_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    date = Column(Date, default=date.today, nullable=False)
-    pair_number = Column(Integer, nullable=False)
-    is_late = Column(Boolean, default=False)
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    date = Column(Date, nullable=False)
+    lesson_number = Column(Integer, nullable=False)  # Пара (1-7)
+    status = Column(String(10), nullable=False)  # "присутствовал", "опоздал", "отсутствовал"
 
-    student = relationship("User", back_populates="attendance_records")
+    user = relationship("User", back_populates="journal_entries")

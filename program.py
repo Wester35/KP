@@ -14,7 +14,7 @@ class MainApp(QWidget):
         self.ui.comboBox.addItem("ISP-306", "DD")
 
         self.ui.comboBox.addItem("ISP-307", "22")
-        self.ui.tableView
+
     #     self.ui.pushButton.clicked.connect(self.show_main_window)
     #
     # def show_main_window(self):

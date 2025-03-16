@@ -1,29 +1,24 @@
 from libs.database import SessionLocal
-from libs.crud import create_user, get_user_by_username, verify_password
-from libs.models import RoleEnum
+from libs.crud import create_user_with_group
+# from sqlalchemy.orm import configure_mappers
+#
+# configure_mappers()
 
-# Подключение к БД
 db = SessionLocal()
 
-# Создаем пользователей
-create_user(db, "admin", "admin", RoleEnum.ADMIN, "Администратор")
-create_user(db, "teacher", "teacher4", RoleEnum.TEACHER, "Учитель Иванов")
-create_user(db, "student", "student1", RoleEnum.STUDENT, "Студент Петров")
+create_user_with_group(
+    session=db,
+    last_name="Иванов",
+    first_name="Иван",
+    middle_name="Иванович",
+    phone="89101153337",
+    login="wester",
+    password="Admin123",
+    group_name="ИСП-306",
+    is_teacher=True,
+    is_admin=True
+)
 
+# Base.metadata.drop_all(engine)
+# Base.metadata.create_all(engine)
 
-# Проверяем авторизацию
-user = get_user_by_username(db, "student1")
-if user and verify_password(user, "studentpassword"):
-    print(f"Успешный вход: {user.username} с ролью {user.role}")
-else:
-    print("Ошибка аутентификации!")
-
-# Закрываем сессию
-db.close()
-
-# from libs.database import engine, Base
-# import libs.models  # Импортируем модели, чтобы SQLAlchemy их увидел
-#
-# print("Создаю таблицы в базе данных...")
-# Base.metadata.create_all(bind=engine)
-# print("Таблицы успешно созданы!")

@@ -1,43 +1,68 @@
 from sqlalchemy.orm import Session
-from .models import User, Attendance, RoleEnum
+from .models import User, Group, Journal
 from werkzeug.security import generate_password_hash, check_password_hash
-
-# Добавить студента
-# def create_student(db: Session, name: str, group: str):
-#     student = Student(name=name, group=group)
-#     db.add(student)
-#     db.commit()
-#     db.refresh(student)
-#     return student
+from datetime import date
 
 
-# Отметить присутствие / опоздание
-def mark_attendance(db: Session, student_id: int, date, pair_number: int, is_late: bool):
-    record = Attendance(student_id=student_id, date=date, pair_number=pair_number, is_late=is_late)
-    db.add(record)
-    db.commit()
-    db.refresh(record)
-    return record
+def create_user(session: Session, last_name, first_name, middle_name, phone, login, password, group_id, is_teacher=False, is_admin=False):
+    hashed_password = generate_password_hash(password)
+    new_user = User(
+        last_name=last_name,
+        first_name=first_name,
+        middle_name=middle_name,
+        phone=phone,
+        login=login,
+        password=hashed_password,
+        group_id=group_id,
+        is_teacher=is_teacher,
+        is_admin=is_admin
+    )
+    session.add(new_user)
+    session.commit()
+    return new_user
 
 
-# Получить посещаемость за дату и номер пары
-def get_attendance_by_date_and_pair(db: Session, date, pair_number: int):
-    return db.query(Attendance).filter(Attendance.date == date, Attendance.pair_number == pair_number).all()
-# Создание пользователя
+def authenticate_user(session: Session, login, password):
+    user = session.query(User).filter_by(login=login).first()
+    if user and check_password_hash(user.password, password):
+        return user
+    return None
 
 
-def create_user(db: Session, username: str, password: str, role: RoleEnum):
-    hashed_password = generate_password_hash(password)  # Хэшируем пароль
-    user = User(username=username, password=hashed_password, role=role)
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
+def add_attendance(session: Session, user_id, lesson_number, status):
+    entry = Journal(user_id=user_id, date=date.today(), lesson_number=lesson_number, status=status)
+    session.add(entry)
+    session.commit()
+    return entry
 
-# Получение пользователя по логину
-def get_user_by_username(db: Session, username: str):
-    return db.query(User).filter(User.username == username).first()
 
-# Проверка пароля
-def verify_password(user: User, password: str):
-    return check_password_hash(user.password, password)
+def get_attendance_by_user(session: Session, user_id):
+    return session.query(Journal).filter_by(user_id=user_id).all()
+
+
+def create_user_with_group(session: Session, last_name, first_name, middle_name, phone, login, password, group_name,
+                           is_teacher=False, is_admin=False):
+
+    group = session.query(Group).filter_by(name=group_name).first()
+
+    if not group:
+        group = Group(name=group_name)
+        session.add(group)
+        session.commit()
+
+    hashed_password = generate_password_hash(password)
+
+    new_user = User(
+        last_name=last_name,
+        first_name=first_name,
+        middle_name=middle_name,
+        phone=phone,
+        login=login,
+        password=hashed_password,
+        group_id=group.id,
+        is_teacher=is_teacher,
+        is_admin=is_admin
+    )
+
+    session.add(new_user)
+    session.commit()
