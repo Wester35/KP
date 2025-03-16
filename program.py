@@ -13,7 +13,7 @@ class MainApp(QWidget):
         self.close()
         self.ui = Ui_Main()
         self.ui.setupUi(self)
-      
+
 
 
 class Auth(QWidget):
