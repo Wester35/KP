@@ -1,16 +1,10 @@
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QLineEdit
-from sqlalchemy.orm import Session
-from werkzeug.security import check_password_hash
-from ui.ui_login import Ui_Authorization as LoginUI  # Класс для авторизации
-from ui.ui_main import Ui_MainWindow as Ui_Main  # Класс для главного окна
+from ui.ui_login import Ui_Authorization as LoginUI
+from ui.ui_main import Ui_MainWindow as Ui_Main
 import sys
-from libs.models import User
 from libs.database import SessionLocal
 from libs.crud import authenticate_user
-# from sqlalchemy.orm import configure_mappers
-#
-# configure_mappers()
 
 
 class MainApp(QWidget):
