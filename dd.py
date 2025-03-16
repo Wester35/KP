@@ -1,10 +1,17 @@
-from libs.database import SessionLocal
+from libs.database import SessionLocal, engine
 from libs.crud import create_user_with_group
+from libs.models import Base
+
 # from sqlalchemy.orm import configure_mappers
 #
 # configure_mappers()
 
 db = SessionLocal()
+
+
+
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
 
 create_user_with_group(
     session=db,
@@ -18,7 +25,3 @@ create_user_with_group(
     is_teacher=True,
     is_admin=True
 )
-
-# Base.metadata.drop_all(engine)
-# Base.metadata.create_all(engine)
-
