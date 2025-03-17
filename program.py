@@ -1,18 +1,57 @@
+import os
+import sys
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QLineEdit
+from PySide6.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QLineEdit, QFileDialog
+from PIL import Image
+
+from libs.models import User
 from ui.ui_login import Ui_Authorization as LoginUI
 from ui.ui_main import Ui_MainWindow as Ui_Main
-import sys
 from libs.database import SessionLocal
-from libs.crud import authenticate_user, save_user_session, check_if_logged_in, load_user_session
+from libs.crud import authenticate_user, save_user_session, load_user_session, check_if_logged_in
 
 
 class MainApp(QWidget):
-    def __init__(self):
+    def __init__(self, user_id):
         super().__init__()
-        self.close()
         self.ui = Ui_Main()
         self.ui.setupUi(self)
+        self.user_id = user_id
+
+        self.ui.pushButton.clicked.connect(self.upload_image)
+
+    def upload_image(self):
+        file_path, _ = QFileDialog.getOpenFileName(self,
+                                                   "Выберите фото", "", "Images (*.png *.jpg *.jpeg)")
+        if not file_path:
+            return
+
+
+        save_dir = "user_images"
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        save_path = os.path.join(save_dir, f"{self.user_id}.jpg")
+
+        try:
+            img = Image.open(file_path)
+            img = img.convert("RGB")
+            img.thumbnail((300, 300))
+            img.save(save_path, "JPEG", quality=85)
+
+            self.save_image_path_to_db(save_path)
+
+            QMessageBox.information(self, "Успешно", "Фото загружено!")
+        except Exception as e:
+            QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
+
+    def save_image_path_to_db(self, image_path):
+        db = SessionLocal()
+        user = db.query(User).filter(User.id == self.user_id).first()
+        if user:
+            user.photo = image_path
+            db.commit()
+        db.close()
 
 
 
@@ -48,16 +87,17 @@ class Auth(QWidget):
 
         db = SessionLocal()
         user = authenticate_user(db, login, password)
+
         if user:
             if self.ui.checkBox.isChecked():
                 save_user_session(user.id)
-            self.show_main_window()
+            self.show_main_window(user.id)
         else:
             QMessageBox.warning(self, "Ошибка", "Неверно")
 
-    def show_main_window(self):
+    def show_main_window(self, user_id):
         self.close()
-        self.ui = MainApp()
+        self.ui = MainApp(user_id)
         self.ui.show()
 
     def check_pwd(self):

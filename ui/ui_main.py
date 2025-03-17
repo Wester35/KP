@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiIkUHoJ.ui'
+## Form generated from reading UI file 'uihXjyYT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHeaderView, QSizePolicy,
-    QTableView, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHeaderView, QPushButton,
+    QSizePolicy, QTableView, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -29,6 +29,9 @@ class Ui_MainWindow(object):
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
         self.tableView.setGeometry(QRect(80, 50, 651, 401))
+        self.pushButton = QPushButton(MainWindow)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(10, 460, 75, 24))
 
         self.retranslateUi(MainWindow)
 
@@ -37,5 +40,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Student", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
     # retranslateUi
 
