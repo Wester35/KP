@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiyyVwUh.ui'
+## Form generated from reading UI file 'uizWkZdB.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(825, 488)
+        MainWindow.resize(890, 523)
         MainWindow.setStyleSheet(u"*{\n"
 "font-size: 16px;\n"
 "font-family: century gothic;\n"
@@ -60,7 +60,8 @@ class Ui_MainWindow(object):
         self.tableView.setGeometry(QRect(100, 50, 651, 401))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
-        self.profileButton.setGeometry(QRect(10, 10, 71, 71))
+        self.profileButton.setGeometry(QRect(10, 10, 70, 70))
+        self.profileButton.setIconSize(QSize(48, 48))
         self.frame = QFrame(MainWindow)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(250, 10, 321, 461))

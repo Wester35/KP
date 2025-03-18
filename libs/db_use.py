@@ -15,13 +15,13 @@ db = SessionLocal()
 
 create_user_with_group(
     session=db,
-    last_name="Петров",
-    first_name="Иван",
+    last_name="Лещаев",
+    first_name="Антов",
     middle_name="Иванович",
-    phone="8910115",
-    login="tester",
+    phone="3434",
+    login="tester3",
     password="Admin123",
     group_name="ИСП-407",
-    is_teacher=True,
+    is_teacher=False,
     is_admin=False
 )

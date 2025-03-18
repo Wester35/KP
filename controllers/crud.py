@@ -100,3 +100,24 @@ def get_groups_from_db():
     groups = db.query(Group).all()
     db.close()
     return groups
+
+
+def get_students_with_journal(group_id):
+    """Получает всех студентов группы и их опоздания, если они есть."""
+    db: Session = SessionLocal()
+
+    results = (
+        db.query(
+            User.last_name,
+            User.first_name,
+            User.middle_name,
+            Journal.status
+        )
+        .outerjoin(Journal, User.id == Journal.user_id)  # LEFT JOIN
+        .filter(User.group_id == group_id, User.is_teacher == False, User.is_admin == False)
+        .order_by(User.last_name, User.first_name)
+        .all()
+    )
+
+    db.close()
+    return results
