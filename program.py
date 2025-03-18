@@ -3,7 +3,6 @@ import sys
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QLineEdit, QFileDialog
 from PIL import Image
-
 from libs.models import User
 from ui.ui_login import Ui_Authorization as LoginUI
 from ui.ui_main import Ui_MainWindow as Ui_Main
@@ -17,8 +16,17 @@ class MainApp(QWidget):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
         self.user_id = user_id
-
+        self.ui.frame.setVisible(False)
         self.ui.pushButton.clicked.connect(self.upload_image)
+        self.ui.profileButton.clicked.connect(self.open_frame)
+        self.ui.closeButton.clicked.connect(self.close_frame)
+
+
+    def open_frame(self):
+        self.ui.frame.setVisible(True)
+
+    def close_frame(self):
+        self.ui.frame.setVisible(False)
 
     def upload_image(self):
         file_path, _ = QFileDialog.getOpenFileName(self,
