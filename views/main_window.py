@@ -2,6 +2,8 @@ import os
 from PIL import Image
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
+
+from controllers.crud import get_groups_from_db
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
@@ -13,11 +15,19 @@ class MainApp(QWidget):
         self.ui = UI_Main()
         self.ui.setupUi(self)
         self.user_id = user_id
+
         self.ui.frame.setVisible(False)
         self.ui.pushButton.clicked.connect(self.upload_image)
         self.ui.profileButton.clicked.connect(self.open_frame)
         self.ui.closeButton.clicked.connect(self.close_frame)
 
+        self.load_groups()
+
+    def load_groups(self):
+        groups = get_groups_from_db()
+        self.ui.comboBox.clear()
+        for group in groups:
+            self.ui.comboBox.addItem(group.name, group.id)
 
     def open_frame(self):
         self.ui.frame.setVisible(True)

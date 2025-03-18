@@ -94,3 +94,9 @@ def create_user_with_group(session: Session, last_name, first_name, middle_name,
 
     session.add(new_user)
     session.commit()
+
+def get_groups_from_db():
+    db = SessionLocal()
+    groups = db.query(Group).all()
+    db.close()
+    return groups
