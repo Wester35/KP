@@ -1,17 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Date, Time
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
-
-
-Base = declarative_base()
-
-
-class Group(Base):
-    __tablename__ = 'groups'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-
-    users = relationship("User", back_populates="group")
+from libs.database import Base
 
 
 class User(Base):
@@ -32,15 +21,3 @@ class User(Base):
     group = relationship("Group", back_populates="users")
 
     journal_entries = relationship("Journal", back_populates="user")
-
-
-class Journal(Base):
-    __tablename__ = 'journal'
-
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    date = Column(Date, nullable=False)
-    lesson_number = Column(Integer, nullable=False)  # Пара (1-7)
-    status = Column(String(10), nullable=False)  # "присутствовал", "опоздал", "отсутствовал"
-
-    user = relationship("User", back_populates="journal_entries")

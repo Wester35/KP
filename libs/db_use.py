@@ -1,5 +1,5 @@
 from libs.database import SessionLocal, engine
-from libs.crud import create_user_with_group
+from controllers.crud import create_user_with_group
 from libs.models import Base
 
 # from sqlalchemy.orm import configure_mappers

@@ -1,20 +1,21 @@
 import json
 from sqlalchemy.orm import Session
-
-from .database import SessionLocal
-from .models import User, Group, Journal
+from libs.database import SessionLocal
+from models.User import User
+from models.Group import Group
+from models.Journal import Journal
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 
 
 def save_user_session(user_id):
-    with open("user_session.json", "w") as f:
+    with open("libs/user_session.json", "w") as f:
         json.dump({"user_id": user_id}, f)
 
 
 def load_user_session():
     try:
-        with open("user_session.json", "r") as f:
+        with open("libs/user_session.json", "r") as f:
             return json.load(f)
     except FileNotFoundError:
         return None
