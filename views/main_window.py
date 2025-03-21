@@ -1,7 +1,7 @@
 import os
 import datetime
 from PIL import Image
-from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem
+from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
 
 from controllers.crud import get_groups_from_db, get_students_with_journal
@@ -61,10 +61,18 @@ class MainApp(QWidget):
             self.ui.comboBox.addItem(group.name, group.id)
 
     def update_photo(self):
-        self.photo.setGeometry(0, 0, 200, 200)
-        pixmap = QPixmap(f"libs/user_images/{self.user_id}.jpg")
-        self.photo.setPixmap(pixmap)
-        self.photo.setScaledContents(True)
+        try:
+            file_path = f"libs/user_images/{self.user_id}.jpg"
+            img = Image.open(file_path)
+            self.photo.setGeometry(0, 0, img.width, img.height)
+            target_size = (200, 200)
+            pixmap = QPixmap(file_path).scaled(*target_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            self.photo.setPixmap(pixmap)
+            self.photo.setFixedSize(*target_size)
+            self.photo.setScaledContents(False)
+            self.photo.setAlignment(Qt.AlignCenter)
+        except Exception:
+            pass
 
     def open_frame(self):
         self.ui.frame.setVisible(True)
