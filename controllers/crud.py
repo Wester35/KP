@@ -1,11 +1,13 @@
 import json
+
+from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
 from models.User import User
 from models.Group import Group
 from models.Journal import Journal
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
+from datetime import date, datetime
 
 
 def save_user_session(user_id):
@@ -101,23 +103,103 @@ def get_groups_from_db():
     db.close()
     return groups
 
-
-def get_students_with_journal(group_id):
-    """Получает всех студентов группы и их опоздания, если они есть."""
+def get_students_with_journal(group_id, date_str):
+    """Получает всех студентов группы и их опоздания за указанную дату и все 7 пар."""
     db: Session = SessionLocal()
+
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
+        return []
 
     results = (
         db.query(
             User.last_name,
             User.first_name,
             User.middle_name,
-            Journal.status
+            func.coalesce(Journal.status, "").label("status"),
+            Journal.lesson_number
         )
-        .outerjoin(Journal, User.id == Journal.user_id)  # LEFT JOIN
-        .filter(User.group_id == group_id, User.is_teacher == False, User.is_admin == False)
-        .order_by(User.last_name, User.first_name)
+        .outerjoin(Journal, and_(Journal.user_id == User.id, Journal.date == date_obj))  # OUTER JOIN для всех студентов
+        .filter(
+            User.group_id == group_id,
+            User.is_teacher == False,
+            User.is_admin == False
+        )
+        .order_by(User.last_name, User.first_name, Journal.lesson_number)
         .all()
     )
 
     db.close()
-    return results
+    student_dict = {}
+    for last_name, first_name, middle_name, status, lesson_number in results:
+        key = (last_name, first_name, middle_name)
+        if key not in student_dict:
+            student_dict[key] = [""] * 7  # Создаём пустые слоты для всех 7 пар
+
+        if lesson_number and 1 <= lesson_number <= 7:  # Проверяем корректность lesson_number
+            student_dict[key][lesson_number - 1] = status
+    # student_dict = {}
+    # for last_name, first_name, middle_name, status, lesson_number in full_query:
+    #     key = (last_name, first_name, middle_name)
+    #     if key not in student_dict:
+    #         student_dict[key] = [""] * 7
+    #     if lesson_number is not None:
+    #         student_dict[key][lesson_number - 1] = status
+    #
+    return student_dict
+
+
+def update_or_create_journal_entry(db: Session, last_name: str, first_name: str, middle_name: str, lesson_number: int,
+                                   status: str):
+    """Обновляет запись о посещаемости или создаёт новую, если её нет."""
+    student = db.query(User).filter(
+        User.last_name == last_name,
+        User.first_name == first_name,
+        User.middle_name == (middle_name if middle_name else None)
+    ).first()
+
+    if not student:
+        return False
+
+    today = date.today()
+
+    entry = db.query(Journal).filter(
+        Journal.user_id == student.id,
+        Journal.date == today,
+        Journal.lesson_number == lesson_number
+    ).first()
+
+    if entry:
+        entry.status = status
+    else:
+        new_entry = Journal(
+            user_id=student.id,
+            date=today,
+            lesson_number=lesson_number,
+            status=status
+        )
+        db.add(new_entry)
+
+    db.commit()
+    return True
+# def get_students_with_journal(group_id, date_str):
+#     """Получает всех студентов группы и их опоздания, если они есть."""
+#     db: Session = SessionLocal()
+#     date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+#     results = (
+#         db.query(
+#             User.last_name,
+#             User.first_name,
+#             User.middle_name,
+#             Journal.status
+#         )
+#         .outerjoin(Journal, User.id == Journal.user_id)  # LEFT JOIN
+#         .filter(User.group_id == group_id, User.is_teacher == False, User.is_admin == False)
+#         .order_by(User.last_name, User.first_name)
+#         .all()
+#     )
+#
+#     db.close()
+#     return results

@@ -4,7 +4,7 @@ from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
 
-from controllers.crud import get_groups_from_db, get_students_with_journal
+from controllers.crud import get_groups_from_db, get_students_with_journal, update_or_create_journal_entry
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
@@ -31,28 +31,59 @@ class MainApp(QWidget):
         self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
 
     def load_journal_table(self, group_id):
-        entries = get_students_with_journal(group_id)
+        """Заполняет таблицу студентами и их статусами за 7 пар."""
+        _date = str(datetime.date.today())
+        students = get_students_with_journal(group_id, _date)
 
         model = QStandardItemModel()
-        model.setColumnCount(4)
-        _date = str(datetime.date.today())
-        model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество", _date])
-
-        for last_name, first_name, middle_name, lateness in entries:
+        model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
+        model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество"] + [f"{i + 1} пара" for i in range(7)])
+        print(students.items())
+        for (last_name, first_name, middle_name), statuses in students.items():
             row = [
                 QStandardItem(last_name),
                 QStandardItem(first_name),
-                QStandardItem(middle_name if middle_name else ""),
-                QStandardItem(lateness if lateness else "")
+                QStandardItem(middle_name if middle_name else "")
             ]
 
             row[0].setEditable(False)
             row[1].setEditable(False)
             row[2].setEditable(False)
 
+            for status in statuses:
+                item = QStandardItem(status)
+                row.append(item)  # Добавляем в таблицу
+
             model.appendRow(row)
 
         self.ui.tableView.setModel(model)
+        self.ui.tableView.model().dataChanged.connect(self.save_journal_entry)
+
+    def save_journal_entry(self, index):
+        """Сохраняет изменённую запись в базу."""
+        row = index.row()
+        col = index.column()
+
+        if col < 3:
+            return  # ФИО нельзя редактировать
+
+        # Получаем данные
+        model = self.ui.tableView.model()
+        last_name = model.item(row, 0).text()
+        first_name = model.item(row, 1).text()
+        middle_name = model.item(row, 2).text()
+        lesson_number = col - 2  # Пары начинаются с 3-го столбца
+        status = model.item(row, col).text()
+
+        # Обновляем данные в БД через CRUD
+        db = SessionLocal()
+        success = update_or_create_journal_entry(db, last_name, first_name, middle_name, lesson_number, status)
+        db.close()
+
+        if success:
+            QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")
+        else:
+            QMessageBox.warning(self, "Ошибка", "Студент не найден!")
 
     def load_groups(self):
         groups = get_groups_from_db()
