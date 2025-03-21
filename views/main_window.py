@@ -51,7 +51,7 @@ class MainApp(QWidget):
 
             for status in statuses:
                 item = QStandardItem(status)
-                row.append(item)  # Добавляем в таблицу
+                row.append(item)
 
             model.appendRow(row)
 
@@ -59,15 +59,12 @@ class MainApp(QWidget):
         self.ui.tableView.model().dataChanged.connect(self.save_journal_entry)
 
     def save_journal_entry(self, index):
-        """Сохраняет изменённую запись в базу."""
-        """Сохраняет изменённую запись в базу."""
         row = index.row()
         col = index.column()
 
         if col < 3:
-            return  # ФИО нельзя редактировать
+            return
 
-        # Получаем данные
         model = self.ui.tableView.model()
         last_name = model.item(row, 0).text()
         first_name = model.item(row, 1).text()
