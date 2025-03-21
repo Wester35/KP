@@ -25,15 +25,14 @@ class MainApp(QWidget):
 
         self.photo = QLabel(self.ui.photo)
         self.update_photo()
-
+        self.date_today = str(datetime.date.today())
         self.load_groups()
         self.on_group_selected()
         self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
 
     def load_journal_table(self, group_id):
         """Заполняет таблицу студентами и их статусами за 7 пар."""
-        _date = str(datetime.date.today())
-        students = get_students_with_journal(group_id, _date)
+        students = get_students_with_journal(group_id, self.date_today)
 
         model = QStandardItemModel()
         model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
@@ -61,6 +60,7 @@ class MainApp(QWidget):
 
     def save_journal_entry(self, index):
         """Сохраняет изменённую запись в базу."""
+        """Сохраняет изменённую запись в базу."""
         row = index.row()
         col = index.column()
 
@@ -72,12 +72,12 @@ class MainApp(QWidget):
         last_name = model.item(row, 0).text()
         first_name = model.item(row, 1).text()
         middle_name = model.item(row, 2).text()
-        lesson_number = col - 2  # Пары начинаются с 3-го столбца
+        lesson_number = col - 2
         status = model.item(row, col).text()
 
-        # Обновляем данные в БД через CRUD
         db = SessionLocal()
-        success = update_or_create_journal_entry(db, last_name, first_name, middle_name, lesson_number, status)
+        success = update_or_create_journal_entry(db, last_name, first_name, middle_name,
+                                                 lesson_number, status, self.date_today)
         db.close()
 
         if success:
