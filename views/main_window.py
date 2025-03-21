@@ -23,15 +23,48 @@ class MainApp(QWidget):
         self.ui.profileButton.clicked.connect(self.open_frame)
         self.ui.closeButton.clicked.connect(self.close_frame)
 
+        self.photo = QLabel(self.ui.photo)
+        self.update_photo()
+
         self.load_groups()
         self.on_group_selected()
         self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
+
+    def load_journal_table(self, group_id):
+        entries = get_students_with_journal(group_id)
+
+        model = QStandardItemModel()
+        model.setColumnCount(4)
+        _date = str(datetime.date.today())
+        model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество", _date])
+
+        for last_name, first_name, middle_name, lateness in entries:
+            row = [
+                QStandardItem(last_name),
+                QStandardItem(first_name),
+                QStandardItem(middle_name if middle_name else ""),
+                QStandardItem(lateness if lateness else "")
+            ]
+
+            row[0].setEditable(False)
+            row[1].setEditable(False)
+            row[2].setEditable(False)
+
+            model.appendRow(row)
+
+        self.ui.tableView.setModel(model)
 
     def load_groups(self):
         groups = get_groups_from_db()
         self.ui.comboBox.clear()
         for group in groups:
             self.ui.comboBox.addItem(group.name, group.id)
+
+    def update_photo(self):
+        self.photo.setGeometry(0, 0, 200, 200)
+        pixmap = QPixmap(f"libs/user_images/{self.user_id}.jpg")
+        self.photo.setPixmap(pixmap)
+        self.photo.setScaledContents(True)
 
     def open_frame(self):
         self.ui.frame.setVisible(True)
@@ -63,6 +96,8 @@ class MainApp(QWidget):
             QMessageBox.information(self, "Успешно", "Фото загружено!")
         except Exception as e:
             QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
+        self.update_photo()
+
 
     def save_image_path_to_db(self, image_path):
         db = SessionLocal()
@@ -76,26 +111,3 @@ class MainApp(QWidget):
         group_id = self.ui.comboBox.currentData()
         self.load_journal_table(group_id)
 
-    def load_journal_table(self, group_id):
-        entries = get_students_with_journal(group_id)
-
-        model = QStandardItemModel()
-        model.setColumnCount(4)
-        _date = str(datetime.date.today())
-        model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество", _date])
-
-        for last_name, first_name, middle_name, lateness in entries:
-            row = [
-                QStandardItem(last_name),
-                QStandardItem(first_name),
-                QStandardItem(middle_name if middle_name else ""),
-                QStandardItem(lateness if lateness else "")
-            ]
-
-            row[0].setEditable(False)
-            row[1].setEditable(False)
-            row[2].setEditable(False)
-
-            model.appendRow(row)
-
-        self.ui.tableView.setModel(model)

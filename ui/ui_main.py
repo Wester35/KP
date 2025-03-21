@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uizWkZdB.ui'
+## Form generated from reading UI file 'uipnEgtw.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -22,7 +22,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(890, 523)
+        MainWindow.resize(1400, 780)
+        MainWindow.setBaseSize(QSize(1000, 800))
         MainWindow.setStyleSheet(u"*{\n"
 "font-size: 16px;\n"
 "font-family: century gothic;\n"
@@ -54,25 +55,30 @@ class Ui_MainWindow(object):
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
-        self.comboBox.setGeometry(QRect(480, 20, 271, 21))
+        self.comboBox.setGeometry(QRect(1040, 20, 271, 21))
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setGeometry(QRect(100, 50, 651, 401))
+        self.tableView.setGeometry(QRect(100, 50, 1211, 611))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
         self.profileButton.setGeometry(QRect(10, 10, 70, 70))
         self.profileButton.setIconSize(QSize(48, 48))
         self.frame = QFrame(MainWindow)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(250, 10, 321, 461))
+        self.frame.setGeometry(QRect(510, 130, 321, 461))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.pushButton = QPushButton(self.frame)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(160, 90, 111, 31))
+        self.pushButton.setGeometry(QRect(80, 240, 111, 31))
         self.closeButton = QPushButton(self.frame)
         self.closeButton.setObjectName(u"closeButton")
         self.closeButton.setGeometry(QRect(260, 10, 51, 51))
+        self.photo = QFrame(self.frame)
+        self.photo.setObjectName(u"photo")
+        self.photo.setGeometry(QRect(30, 30, 200, 200))
+        self.photo.setFrameShape(QFrame.Shape.StyledPanel)
+        self.photo.setFrameShadow(QFrame.Shadow.Raised)
 
         self.retranslateUi(MainWindow)
 
