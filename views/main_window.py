@@ -25,7 +25,7 @@ class MainApp(QWidget):
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
         elif (not self.is_admin) and self.is_teacher:
-            pass
+            self.ui.calendarWidget.setVisible(False)
         elif self.is_admin:
             pass
 
@@ -38,6 +38,7 @@ class MainApp(QWidget):
         self.ui.closeButton.clicked.connect(self.close_frame)
         self.ui.logoutButton.clicked.connect(self.logout_user)
         self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
+        self.ui.calendarWidget.selectionChanged.connect(self.on_group_selected)
 
         #Any
         self.photo = QLabel(self.ui.photo)
@@ -47,8 +48,8 @@ class MainApp(QWidget):
         self.on_group_selected()
 
     def get_date(self):
-        date = self.ui.calendarWidget.selectedDate()  # Получаем QDate
-        return date.toString("yyyy-MM-dd")
+        date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
+        return date
 
     def logout_user(self):
         delete_user_session()
@@ -56,7 +57,7 @@ class MainApp(QWidget):
 
     def load_journal_table(self, group_id):
         """Заполняет таблицу студентами и их статусами за 7 пар."""
-        students = get_students_with_journal(group_id, self.ui.calendarWidget.selectedDate())
+        students = get_students_with_journal(group_id, self.get_date())
 
         model = QStandardItemModel()
         model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
@@ -98,7 +99,7 @@ class MainApp(QWidget):
 
         db = SessionLocal()
         success = update_or_create_journal_entry(db, last_name, first_name, middle_name,
-                                                 lesson_number, status, self.date_today)
+                                                 lesson_number, status, self.get_date())
         db.close()
 
         if success:
