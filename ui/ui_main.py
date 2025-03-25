@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uipnEgtw.ui'
+## Form generated from reading UI file 'uiqFQquM.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHeaderView,
-    QPushButton, QSizePolicy, QTableView, QWidget)
+from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QFrame,
+    QHeaderView, QPushButton, QSizePolicy, QTableView,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -58,7 +59,7 @@ class Ui_MainWindow(object):
         self.comboBox.setGeometry(QRect(1040, 20, 271, 21))
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setGeometry(QRect(100, 50, 1211, 611))
+        self.tableView.setGeometry(QRect(290, 50, 1021, 611))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
         self.profileButton.setGeometry(QRect(10, 10, 70, 70))
@@ -79,6 +80,12 @@ class Ui_MainWindow(object):
         self.photo.setGeometry(QRect(30, 30, 200, 200))
         self.photo.setFrameShape(QFrame.Shape.StyledPanel)
         self.photo.setFrameShadow(QFrame.Shadow.Raised)
+        self.logoutButton = QPushButton(self.frame)
+        self.logoutButton.setObjectName(u"logoutButton")
+        self.logoutButton.setGeometry(QRect(224, 423, 81, 31))
+        self.calendarWidget = QCalendarWidget(MainWindow)
+        self.calendarWidget.setObjectName(u"calendarWidget")
+        self.calendarWidget.setGeometry(QRect(0, 120, 281, 351))
 
         self.retranslateUi(MainWindow)
 
@@ -90,5 +97,6 @@ class Ui_MainWindow(object):
         self.profileButton.setText("")
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Load Photo", None))
         self.closeButton.setText("")
+        self.logoutButton.setText(QCoreApplication.translate("MainWindow", u"Log Out", None))
     # retranslateUi
 

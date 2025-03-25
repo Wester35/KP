@@ -4,35 +4,59 @@ from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
 
-from controllers.crud import get_groups_from_db, get_students_with_journal, update_or_create_journal_entry
+from controllers.crud import (get_groups_from_db, get_students_with_journal,
+                              update_or_create_journal_entry, delete_user_session)
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
 
 
 class MainApp(QWidget):
-    def __init__(self, user_id):
+    def __init__(self, user_id, is_teacher, is_admin):
         super().__init__()
         self.ui = UI_Main()
         self.ui.setupUi(self)
         self.user_id = user_id
+        self.is_teacher = is_teacher
+        self.is_admin = is_admin
+
+        if (not self.is_admin) and (not self.is_teacher):
+            self.ui.tableView.setVisible(False)
+            self.ui.comboBox.setVisible(False)
+            self.ui.calendarWidget.setVisible(False)
+        elif (not self.is_admin) and self.is_teacher:
+            pass
+        elif self.is_admin:
+            pass
+
+        #Buttons
         self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.ui.frame.setVisible(False)
         self.ui.pushButton.clicked.connect(self.upload_image)
         self.ui.profileButton.clicked.connect(self.open_frame)
         self.ui.closeButton.clicked.connect(self.close_frame)
+        self.ui.logoutButton.clicked.connect(self.logout_user)
+        self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
 
+        #Any
         self.photo = QLabel(self.ui.photo)
         self.update_photo()
         self.date_today = str(datetime.date.today())
         self.load_groups()
         self.on_group_selected()
-        self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
+
+    def get_date(self):
+        date = self.ui.calendarWidget.selectedDate()  # Получаем QDate
+        return date.toString("yyyy-MM-dd")
+
+    def logout_user(self):
+        delete_user_session()
+        self.close()
 
     def load_journal_table(self, group_id):
         """Заполняет таблицу студентами и их статусами за 7 пар."""
-        students = get_students_with_journal(group_id, self.date_today)
+        students = get_students_with_journal(group_id, self.ui.calendarWidget.selectedDate())
 
         model = QStandardItemModel()
         model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар

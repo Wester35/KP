@@ -63,9 +63,9 @@ background-color:#111
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>290</x>
      <y>50</y>
-     <width>1211</width>
+     <width>1021</width>
      <height>611</height>
     </rect>
    </property>
@@ -146,6 +146,29 @@ background-color:#111
      <enum>QFrame::Shadow::Raised</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="logoutButton">
+    <property name="geometry">
+     <rect>
+      <x>224</x>
+      <y>423</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Log Out</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCalendarWidget" name="calendarWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>120</y>
+     <width>281</width>
+     <height>351</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>

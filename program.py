@@ -9,7 +9,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     session_data = load_user_session()
     if session_data and session_data.get("user_id"):
-        main_app = MainApp(session_data.get("user_id"))
+        main_app = MainApp(session_data.get("user_id"), session_data.get("is_teacher"), session_data.get("is_admin"))
         main_app.show()
     else:
         main_app = Auth()

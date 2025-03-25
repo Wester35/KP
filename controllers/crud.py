@@ -1,6 +1,5 @@
 import json
-from multiprocessing.forkserver import read_signed
-
+import os
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
@@ -11,10 +10,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime
 
 
-def save_user_session(user_id):
+def save_user_session(user_id, is_teacher, is_admin):
     with open("libs/user_session.json", "w") as f:
-        json.dump({"user_id": user_id}, f)
+        json.dump({"user_id": user_id, "is_teacher": is_teacher, "is_admin": is_admin}, f)
 
+def delete_user_session():
+    auth_file_path = "libs/user_session.json"
+    if os.path.exists(auth_file_path):
+        os.remove(auth_file_path)
 
 def load_user_session():
     try:
@@ -133,7 +136,6 @@ def get_students_with_journal(group_id, date_str):
     )
 
     db.close()
-    print(results)
     student_dict = {}
     for last_name, first_name, middle_name, status, lesson_number in results:
         key = (last_name, first_name, middle_name)
@@ -142,10 +144,7 @@ def get_students_with_journal(group_id, date_str):
         if lesson_number is not None:
             student_dict[key][lesson_number - 1] = status
 
-    # Возвращаем словарь с информацией
     return student_dict
-
-
 
 
 def update_or_create_journal_entry(db: Session, last_name: str, first_name: str, middle_name: str, lesson_number: int,

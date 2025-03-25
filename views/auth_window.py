@@ -41,14 +41,14 @@ class Auth(QWidget):
 
         if user:
             if self.ui.checkBox.isChecked():
-                save_user_session(user.id)
-            self.show_main_window(user.id)
+                save_user_session(user.id, user.is_teacher, user.is_admin)
+            self.show_main_window(user.id, user.is_teacher, user.is_admin)
         else:
             QMessageBox.warning(self, "Ошибка", "Неверно")
 
-    def show_main_window(self, user_id):
+    def show_main_window(self, user_id, is_teacher, is_admin):
         self.close()
-        self.ui = MainApp(user_id)
+        self.ui = MainApp(user_id, is_teacher, is_admin)
         self.ui.show()
 
     def check_pwd(self):
