@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiwFALli.ui'
+## Form generated from reading UI file 'uiZMEjEa.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QFormLayout,
-    QFrame, QHeaderView, QLabel, QPushButton,
-    QSizePolicy, QTableView, QWidget)
+from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QFrame,
+    QHeaderView, QLabel, QPushButton, QSizePolicy,
+    QTableView, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
 "}\n"
 "QLabel{\n"
 "font-size:24px;\n"
-"background-color:#333;\n"
+"background-color:transparent;\n"
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
@@ -73,7 +73,7 @@ class Ui_MainWindow(object):
         self.profileButton.setIconSize(QSize(48, 48))
         self.frame = QFrame(MainWindow)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(520, 40, 401, 701))
+        self.frame.setGeometry(QRect(520, 30, 401, 701))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.pushButton = QPushButton(self.frame)
@@ -90,28 +90,20 @@ class Ui_MainWindow(object):
         self.logoutButton = QPushButton(self.frame)
         self.logoutButton.setObjectName(u"logoutButton")
         self.logoutButton.setGeometry(QRect(300, 650, 81, 31))
-        self.formLayoutWidget = QWidget(self.frame)
-        self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(20, 340, 581, 212))
-        self.formLayout = QFormLayout(self.formLayoutWidget)
-        self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
-        self.surname = QLabel(self.formLayoutWidget)
-        self.surname.setObjectName(u"surname")
+        self.login = QLabel(self.frame)
+        self.login.setObjectName(u"login")
+        self.login.setGeometry(QRect(30, 340, 78, 30))
         font = QFont()
         font.setFamilies([u"century gothic"])
         font.setBold(True)
+        self.login.setFont(font)
+        self.surname = QLabel(self.frame)
+        self.surname.setObjectName(u"surname")
+        self.surname.setGeometry(QRect(30, 370, 114, 30))
         self.surname.setFont(font)
-
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.surname)
-
-        self.surnameValue = QLabel(self.formLayoutWidget)
-        self.surnameValue.setObjectName(u"surnameValue")
-
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.surnameValue)
-
-        self.name = QLabel(self.formLayoutWidget)
+        self.name = QLabel(self.frame)
         self.name.setObjectName(u"name")
+        self.name.setGeometry(QRect(30, 400, 55, 30))
         font1 = QFont()
         font1.setFamilies([u"century gothic"])
         font1.setBold(True)
@@ -120,58 +112,36 @@ class Ui_MainWindow(object):
         font1.setStrikeOut(False)
         font1.setKerning(True)
         self.name.setFont(font1)
-
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.name)
-
-        self.nameValue = QLabel(self.formLayoutWidget)
-        self.nameValue.setObjectName(u"nameValue")
-
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.nameValue)
-
-        self.lastname = QLabel(self.formLayoutWidget)
-        self.lastname.setObjectName(u"lastname")
-        self.lastname.setFont(font)
-
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.lastname)
-
-        self.lastnameValue = QLabel(self.formLayoutWidget)
-        self.lastnameValue.setObjectName(u"lastnameValue")
-
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.lastnameValue)
-
-        self.phone = QLabel(self.formLayoutWidget)
-        self.phone.setObjectName(u"phone")
-        self.phone.setFont(font)
-
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.phone)
-
-        self.phoneValue = QLabel(self.formLayoutWidget)
-        self.phoneValue.setObjectName(u"phoneValue")
-
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.phoneValue)
-
-        self.group = QLabel(self.formLayoutWidget)
-        self.group.setObjectName(u"group")
-        self.group.setFont(font)
-
-        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.group)
-
-        self.groupValue = QLabel(self.formLayoutWidget)
-        self.groupValue.setObjectName(u"groupValue")
-
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.groupValue)
-
-        self.login = QLabel(self.formLayoutWidget)
-        self.login.setObjectName(u"login")
-        self.login.setFont(font)
-
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.login)
-
-        self.loginValue = QLabel(self.formLayoutWidget)
+        self.loginValue = QLabel(self.frame)
         self.loginValue.setObjectName(u"loginValue")
-
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.loginValue)
-
+        self.loginValue.setGeometry(QRect(160, 340, 448, 30))
+        self.surnameValue = QLabel(self.frame)
+        self.surnameValue.setObjectName(u"surnameValue")
+        self.surnameValue.setGeometry(QRect(160, 370, 441, 30))
+        self.nameValue = QLabel(self.frame)
+        self.nameValue.setObjectName(u"nameValue")
+        self.nameValue.setGeometry(QRect(160, 400, 441, 30))
+        self.lastname = QLabel(self.frame)
+        self.lastname.setObjectName(u"lastname")
+        self.lastname.setGeometry(QRect(30, 430, 125, 30))
+        self.lastname.setFont(font)
+        self.lastnameValue = QLabel(self.frame)
+        self.lastnameValue.setObjectName(u"lastnameValue")
+        self.lastnameValue.setGeometry(QRect(160, 430, 458, 30))
+        self.phone = QLabel(self.frame)
+        self.phone.setObjectName(u"phone")
+        self.phone.setGeometry(QRect(30, 460, 115, 30))
+        self.phone.setFont(font)
+        self.phoneValue = QLabel(self.frame)
+        self.phoneValue.setObjectName(u"phoneValue")
+        self.phoneValue.setGeometry(QRect(160, 460, 480, 30))
+        self.group = QLabel(self.frame)
+        self.group.setObjectName(u"group")
+        self.group.setGeometry(QRect(30, 490, 93, 30))
+        self.group.setFont(font)
+        self.groupValue = QLabel(self.frame)
+        self.groupValue.setObjectName(u"groupValue")
+        self.groupValue.setGeometry(QRect(160, 490, 573, 31))
         self.calendarWidget = QCalendarWidget(MainWindow)
         self.calendarWidget.setObjectName(u"calendarWidget")
         self.calendarWidget.setGeometry(QRect(1150, 60, 341, 451))
@@ -187,9 +157,11 @@ class Ui_MainWindow(object):
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Load Photo", None))
         self.closeButton.setText("")
         self.logoutButton.setText(QCoreApplication.translate("MainWindow", u"Log Out", None))
+        self.login.setText(QCoreApplication.translate("MainWindow", u"\u041b\u043e\u0433\u0438\u043d:", None))
         self.surname.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u043c\u0438\u043b\u0438\u044f:", None))
-        self.surnameValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.name.setText(QCoreApplication.translate("MainWindow", u"\u0418\u043c\u044f:", None))
+        self.loginValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.surnameValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.nameValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.lastname.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e:", None))
         self.lastnameValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -197,7 +169,5 @@ class Ui_MainWindow(object):
         self.phoneValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.group.setText(QCoreApplication.translate("MainWindow", u"\u0413\u0440\u0443\u043f\u043f\u0430:", None))
         self.groupValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.login.setText(QCoreApplication.translate("MainWindow", u"\u041b\u043e\u0433\u0438\u043d:", None))
-        self.loginValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
     # retranslateUi
 

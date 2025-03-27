@@ -52,6 +52,9 @@ class MainApp(QWidget):
         self.load_groups()
         self.on_group_selected()
 
+    def load_userdata(self):
+        pass
+
     def get_date(self):
         date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
         return date
