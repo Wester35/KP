@@ -118,7 +118,7 @@ class MainApp(QWidget):
             file_path = f"libs/user_images/{self.user_id}.jpg"
             img = Image.open(file_path)
             self.photo.setGeometry(0, 0, img.width, img.height)
-            target_size = (200, 200)
+            target_size = (261, 261)
             pixmap = QPixmap(file_path).scaled(*target_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.photo.setPixmap(pixmap)
             self.photo.setFixedSize(*target_size)
