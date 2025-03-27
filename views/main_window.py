@@ -5,7 +5,7 @@ from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
 
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
-                              update_or_create_journal_entry, delete_user_session)
+                              update_or_create_journal_entry, delete_user_session, get_user_data_by_id)
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
@@ -51,9 +51,16 @@ class MainApp(QWidget):
         self.date_today = str(datetime.date.today())
         self.load_groups()
         self.on_group_selected()
+        self.load_userdata_to_labels()
 
-    def load_userdata(self):
-        pass
+    def load_userdata_to_labels(self):
+        user = get_user_data_by_id(self.user_id)
+        self.ui.loginValue.setText(user.login)
+        self.ui.surnameValue.setText(user.last_name)
+        self.ui.nameValue.setText(user.first_name)
+        self.ui.lastnameValue.setText(user.middle_name)
+        self.ui.phoneValue.setText(user.phone)
+        self.ui.groupValue.setText(user.group_name)
 
     def get_date(self):
         date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")

@@ -26,6 +26,23 @@ def load_user_session():
     except FileNotFoundError:
         return None
 
+def get_user_data_by_id(user_id):
+    db: Session = SessionLocal()
+    user = (
+        db.query(User.id,
+                 User.first_name,
+                 User.last_name,
+                 User.middle_name,
+                 User.phone,
+                 User.login,
+                 User.group_id,
+                 Group.name.label("group_name"))
+        .outerjoin(Group)
+        .filter(User.id == user_id)
+        .first()
+    )
+    db.close()
+    return user
 
 def check_if_logged_in():
     session_data = load_user_session()
