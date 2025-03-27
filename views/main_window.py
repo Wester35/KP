@@ -24,6 +24,7 @@ class MainApp(QWidget):
             self.ui.tableView.setVisible(False)
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
+            self.resize(1300, 780)
         elif (not self.is_admin) and self.is_teacher:
             self.ui.calendarWidget.setVisible(False)
             self.resize(1300, 780)
@@ -34,6 +35,9 @@ class MainApp(QWidget):
         self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.ui.frame.setVisible(False)
+
+        self.ui.closeButton.setText("✖")
+
         self.ui.pushButton.clicked.connect(self.upload_image)
         self.ui.profileButton.clicked.connect(self.open_frame)
         self.ui.closeButton.clicked.connect(self.close_frame)
@@ -158,7 +162,8 @@ class MainApp(QWidget):
             QMessageBox.information(self, "Успешно", "Фото загружено!")
         except Exception as e:
             QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
-        self.update_photo()
+        finally:
+            self.update_photo()
 
 
     def save_image_path_to_db(self, image_path):
