@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1400</width>
+    <width>1500</width>
     <height>780</height>
    </rect>
   </property>
@@ -56,7 +56,7 @@ border-radius:20px;
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>830</x>
+     <x>870</x>
      <y>10</y>
      <width>271</width>
      <height>21</height>
@@ -66,9 +66,9 @@ border-radius:20px;
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>90</x>
      <y>60</y>
-     <width>1001</width>
+     <width>1051</width>
      <height>711</height>
     </rect>
    </property>
@@ -95,7 +95,7 @@ border-radius:20px;
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>520</x>
      <y>40</y>
      <width>401</width>
      <height>701</height>
@@ -166,10 +166,10 @@ border-radius:20px;
   <widget class="QCalendarWidget" name="calendarWidget">
    <property name="geometry">
     <rect>
-     <x>1120</x>
+     <x>1150</x>
      <y>60</y>
-     <width>281</width>
-     <height>351</height>
+     <width>341</width>
+     <height>451</height>
     </rect>
    </property>
   </widget>

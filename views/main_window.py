@@ -26,6 +26,7 @@ class MainApp(QWidget):
             self.ui.calendarWidget.setVisible(False)
         elif (not self.is_admin) and self.is_teacher:
             self.ui.calendarWidget.setVisible(False)
+            self.resize(1300, 780)
         elif self.is_admin:
             pass
 

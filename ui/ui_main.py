@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uihFAXYh.ui'
+## Form generated from reading UI file 'uisEVxRp.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1400, 780)
+        MainWindow.resize(1500, 780)
         MainWindow.setBaseSize(QSize(1000, 800))
         MainWindow.setStyleSheet(u"*{\n"
 "font-size: 16px;\n"
@@ -59,17 +59,17 @@ class Ui_MainWindow(object):
 "")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
-        self.comboBox.setGeometry(QRect(830, 10, 271, 21))
+        self.comboBox.setGeometry(QRect(870, 10, 271, 21))
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setGeometry(QRect(110, 60, 1001, 711))
+        self.tableView.setGeometry(QRect(90, 60, 1051, 711))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
         self.profileButton.setGeometry(QRect(10, 10, 70, 70))
         self.profileButton.setIconSize(QSize(48, 48))
         self.frame = QFrame(MainWindow)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(470, 40, 401, 701))
+        self.frame.setGeometry(QRect(520, 40, 401, 701))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.pushButton = QPushButton(self.frame)
@@ -88,7 +88,7 @@ class Ui_MainWindow(object):
         self.logoutButton.setGeometry(QRect(300, 650, 81, 31))
         self.calendarWidget = QCalendarWidget(MainWindow)
         self.calendarWidget.setObjectName(u"calendarWidget")
-        self.calendarWidget.setGeometry(QRect(1120, 60, 281, 351))
+        self.calendarWidget.setGeometry(QRect(1150, 60, 341, 451))
 
         self.retranslateUi(MainWindow)
 
