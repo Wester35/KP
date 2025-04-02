@@ -2,7 +2,8 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog
+from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
+    QSplitter
 
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id)
@@ -28,11 +29,14 @@ class MainApp(QWidget):
         elif (not self.is_admin) and self.is_teacher:
             self.ui.calendarWidget.setVisible(False)
             self.resize(1300, 780)
+            self.ui.formLayoutWidget.setVisible(False)
         elif self.is_admin:
-            pass
+            self.ui.formLayoutWidget.setVisible(False)
+            self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         #Buttons
         self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.ui.profileButton.setFixedSize(72, 72)
         self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
         self.ui.frame.setVisible(False)
 
@@ -52,6 +56,27 @@ class MainApp(QWidget):
         self.load_groups()
         self.on_group_selected()
         self.load_userdata_to_labels()
+
+        main_layout = QVBoxLayout(self)
+
+        top_layout = QHBoxLayout()
+        top_layout.addWidget(self.ui.profileButton)
+        top_layout.addWidget(self.ui.comboBox)
+
+
+        center_layout = QHBoxLayout()
+        self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        center_layout.addWidget(self.ui.tableView)
+
+        self.ui.calendarWidget.setFixedSize(341, 451)
+        center_layout.addWidget(self.ui.calendarWidget)
+
+        main_layout.addLayout(top_layout)
+        main_layout.addLayout(center_layout)
+
+        self.setLayout(main_layout)
+        center_layout.setStretch(0, 3)
+        center_layout.setStretch(1, 1)
 
     def load_userdata_to_labels(self):
         user = get_user_data_by_id(self.user_id)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiZMEjEa.ui'
+## Form generated from reading UI file 'uiEbUJwG.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.2
 ##
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QFrame,
-    QHeaderView, QLabel, QPushButton, QSizePolicy,
-    QTableView, QWidget)
+from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QFormLayout,
+    QFrame, QHeaderView, QLabel, QPushButton,
+    QSizePolicy, QTableView, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -145,6 +145,38 @@ class Ui_MainWindow(object):
         self.calendarWidget = QCalendarWidget(MainWindow)
         self.calendarWidget.setObjectName(u"calendarWidget")
         self.calendarWidget.setGeometry(QRect(1150, 60, 341, 451))
+        self.formLayoutWidget = QWidget(MainWindow)
+        self.formLayoutWidget.setObjectName(u"formLayoutWidget")
+        self.formLayoutWidget.setGeometry(QRect(100, 70, 611, 401))
+        self.formLayout = QFormLayout(self.formLayoutWidget)
+        self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
+        self.lates = QLabel(self.formLayoutWidget)
+        self.lates.setObjectName(u"lates")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.lates)
+
+        self.latesValue = QLabel(self.formLayoutWidget)
+        self.latesValue.setObjectName(u"latesValue")
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.latesValue)
+
+        self.absence = QLabel(self.formLayoutWidget)
+        self.absence.setObjectName(u"absence")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.absence)
+
+        self.absenceValue = QLabel(self.formLayoutWidget)
+        self.absenceValue.setObjectName(u"absenceValue")
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.absenceValue)
+
+        self.comboBox.raise_()
+        self.tableView.raise_()
+        self.profileButton.raise_()
+        self.calendarWidget.raise_()
+        self.formLayoutWidget.raise_()
+        self.frame.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -169,5 +201,9 @@ class Ui_MainWindow(object):
         self.phoneValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.group.setText(QCoreApplication.translate("MainWindow", u"\u0413\u0440\u0443\u043f\u043f\u0430:", None))
         self.groupValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.lates.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043e\u043f\u043e\u0437\u0434\u0430\u043d\u0438\u0439:", None))
+        self.latesValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.absence.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043e\u0432:", None))
+        self.absenceValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
     # retranslateUi
 
