@@ -153,7 +153,7 @@ class MainApp(QWidget):
         for group in groups:
             self.ui.comboBox.addItem(group.name, group.id)
 
-    def update_photo(self):
+    def update_photo(self): #должна подргужать с базы данных путь к фото а не шаблонный
         try:
             file_path = f"libs/user_images/{self.user_id}.jpg"
             img = Image.open(file_path)
