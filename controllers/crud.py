@@ -14,10 +14,12 @@ def save_user_session(user_id, is_teacher, is_admin):
     with open("libs/user_session.json", "w") as f:
         json.dump({"user_id": user_id, "is_teacher": is_teacher, "is_admin": is_admin}, f)
 
+
 def delete_user_session():
     auth_file_path = "libs/user_session.json"
     if os.path.exists(auth_file_path):
         os.remove(auth_file_path)
+
 
 def load_user_session():
     try:
@@ -25,6 +27,7 @@ def load_user_session():
             return json.load(f)
     except FileNotFoundError:
         return None
+
 
 def get_user_data_by_id(user_id):
     db: Session = SessionLocal()
@@ -35,6 +38,7 @@ def get_user_data_by_id(user_id):
                  User.middle_name,
                  User.phone,
                  User.login,
+                 User.photo,
                  User.group_id,
                  Group.name.label("group_name"))
         .outerjoin(Group)
@@ -43,6 +47,7 @@ def get_user_data_by_id(user_id):
     )
     db.close()
     return user
+
 
 def check_if_logged_in():
     session_data = load_user_session()
@@ -55,7 +60,8 @@ def check_if_logged_in():
     return None
 
 
-def create_user(session: Session, last_name, first_name, middle_name, phone, login, password, group_id, is_teacher=False, is_admin=False):
+def create_user(session: Session, last_name, first_name, middle_name, phone, login,
+                password, group_id, is_teacher=False, is_admin=False):
     hashed_password = generate_password_hash(password)
     new_user = User(
         last_name=last_name,
@@ -118,11 +124,13 @@ def create_user_with_group(session: Session, last_name, first_name, middle_name,
     session.add(new_user)
     session.commit()
 
+
 def get_groups_from_db():
     db = SessionLocal()
     groups = db.query(Group).all()
     db.close()
     return groups
+
 
 def get_students_with_journal(group_id, date_str):
     """Получает всех студентов группы и их опоздания за указанную дату и все 7 пар."""

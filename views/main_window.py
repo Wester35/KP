@@ -2,8 +2,7 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
-    QSplitter
+from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
 
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id)
@@ -51,11 +50,10 @@ class MainApp(QWidget):
 
         #Any
         self.photo = QLabel(self.ui.photo)
-        self.update_photo()
         self.date_today = str(datetime.date.today())
         self.load_groups()
         self.on_group_selected()
-        self.load_userdata_to_labels()
+        self.load_userdata()
 
         main_layout = QVBoxLayout(self)
 
@@ -78,7 +76,7 @@ class MainApp(QWidget):
         center_layout.setStretch(0, 3)
         center_layout.setStretch(1, 1)
 
-    def load_userdata_to_labels(self):
+    def load_userdata(self):
         user = get_user_data_by_id(self.user_id)
         self.ui.loginValue.setText(user.login)
         self.ui.surnameValue.setText(user.last_name)
@@ -86,6 +84,7 @@ class MainApp(QWidget):
         self.ui.lastnameValue.setText(user.middle_name)
         self.ui.phoneValue.setText(user.phone)
         self.ui.groupValue.setText(user.group_name)
+        self.update_photo(user.photo)
 
     def get_date(self):
         return self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
@@ -152,9 +151,8 @@ class MainApp(QWidget):
         for group in groups:
             self.ui.comboBox.addItem(group.name, group.id)
 
-    def update_photo(self): #должна подргужать с базы данных путь к фото а не шаблонный
+    def update_photo(self, file_path):
         try:
-            file_path = f"libs/user_images/{self.user_id}.jpg"
             img = Image.open(file_path)
             self.photo.setGeometry(0, 0, img.width, img.height)
             target_size = (261, 261)
@@ -197,7 +195,7 @@ class MainApp(QWidget):
         except Exception as e:
             QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
         finally:
-            self.update_photo()
+            self.update_photo(save_path)
 
 
     def save_image_path_to_db(self, image_path):
