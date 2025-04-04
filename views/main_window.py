@@ -88,8 +88,7 @@ class MainApp(QWidget):
         self.ui.groupValue.setText(user.group_name)
 
     def get_date(self):
-        date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
-        return date
+        return self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
 
     def logout_user(self):
         delete_user_session()
