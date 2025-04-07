@@ -69,12 +69,32 @@ class MainApp(QWidget):
         self.ui.calendarWidget.setFixedSize(341, 451)
         center_layout.addWidget(self.ui.calendarWidget)
 
+
         main_layout.addLayout(top_layout)
         main_layout.addLayout(center_layout)
 
         self.setLayout(main_layout)
         center_layout.setStretch(0, 3)
         center_layout.setStretch(1, 1)
+
+        #Frame
+        self.ui.frame.setParent(self)
+        self.ui.frame.setVisible(False)
+        self.center_frame()
+        self.resizeEvent = self.on_resize
+
+    def center_frame(self):
+        frame_size = self.ui.frame.size()
+        window_size = self.size()
+
+        x = (window_size.width() - frame_size.width()) // 2
+        y = (window_size.height() - frame_size.height()) // 2
+
+        self.ui.frame.move(x, y)
+
+    def on_resize(self, event):
+        super().resizeEvent(event)
+        self.center_frame()
 
     def load_userdata(self):
         user = get_user_data_by_id(self.user_id)
