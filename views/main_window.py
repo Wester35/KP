@@ -24,14 +24,35 @@ class MainApp(QWidget):
             self.ui.tableView.setVisible(False)
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
-            self.resize(1300, 780)
-        elif (not self.is_admin) and self.is_teacher:
-            self.ui.calendarWidget.setVisible(False)
-            self.resize(1300, 780)
-            self.ui.formLayoutWidget.setVisible(False)
-        elif self.is_admin:
-            self.ui.formLayoutWidget.setVisible(False)
-            self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            self.resize(800, 780)
+        else:
+            if (not self.is_admin) and self.is_teacher:
+                self.ui.calendarWidget.setVisible(False)
+                self.resize(1050, 780)
+                self.ui.formLayoutWidget.setVisible(False)
+            elif self.is_admin:
+                self.ui.formLayoutWidget.setVisible(False)
+                self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+            main_layout = QVBoxLayout(self)
+
+            top_layout = QHBoxLayout()
+            top_layout.addWidget(self.ui.profileButton)
+            top_layout.addWidget(self.ui.comboBox)
+
+            center_layout = QHBoxLayout()
+            self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            center_layout.addWidget(self.ui.tableView)
+
+            self.ui.calendarWidget.setFixedSize(341, 451)
+            center_layout.addWidget(self.ui.calendarWidget)
+
+            main_layout.addLayout(top_layout)
+            main_layout.addLayout(center_layout)
+
+            self.setLayout(main_layout)
+            center_layout.setStretch(0, 3)
+            center_layout.setStretch(1, 1)
 
         #Buttons
         self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
@@ -55,29 +76,7 @@ class MainApp(QWidget):
         self.on_group_selected()
         self.load_userdata()
 
-        main_layout = QVBoxLayout(self)
-
-        top_layout = QHBoxLayout()
-        top_layout.addWidget(self.ui.profileButton)
-        top_layout.addWidget(self.ui.comboBox)
-
-
-        center_layout = QHBoxLayout()
-        self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        center_layout.addWidget(self.ui.tableView)
-
-        self.ui.calendarWidget.setFixedSize(341, 451)
-        center_layout.addWidget(self.ui.calendarWidget)
-
-
-        main_layout.addLayout(top_layout)
-        main_layout.addLayout(center_layout)
-
-        self.setLayout(main_layout)
-        center_layout.setStretch(0, 3)
-        center_layout.setStretch(1, 1)
-
-        #Frame
+        # Frame
         self.ui.frame.setParent(self)
         self.ui.frame.setVisible(False)
         self.center_frame()
