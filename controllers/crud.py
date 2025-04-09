@@ -10,9 +10,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime
 
 
-def save_user_session(user_id, is_teacher, is_admin):
+def save_user_session(user_id):
     with open("libs/user_session.json", "w") as f:
-        json.dump({"user_id": user_id, "is_teacher": is_teacher, "is_admin": is_admin}, f)
+        json.dump({"user_id": user_id}, f)
 
 
 def delete_user_session():
@@ -56,8 +56,8 @@ def check_if_logged_in():
         db = SessionLocal()
         user = db.query(User).filter(User.id == user_id).first()
         if user:
-            return user
-    return None
+            return user.id, user.is_teacher, user.is_admin
+    return None, None, None
 
 
 def create_user(session: Session, last_name, first_name, middle_name, phone, login,
