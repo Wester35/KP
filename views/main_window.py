@@ -119,7 +119,7 @@ class MainApp(QWidget):
         model = QStandardItemModel()
         model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
         model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество"] + [f"{i + 1} пара" for i in range(7)])
-        print(students.items())
+        
         for (last_name, first_name, middle_name), statuses in students.items():
             row = [
                 QStandardItem(last_name),
