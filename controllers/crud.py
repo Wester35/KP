@@ -29,6 +29,15 @@ def load_user_session():
         return None
 
 
+def save_image_path_to_db(user_id, image_path):
+    db = SessionLocal()
+    user = db.query(User).filter(User.id == user_id).first()
+    if user:
+        user.photo = image_path
+        db.commit()
+    db.close()
+
+
 def get_user_data_by_id(user_id):
     db: Session = SessionLocal()
     user = (
@@ -169,8 +178,10 @@ def get_students_with_journal(group_id, date_str):
     return student_dict
 
 
-def update_or_create_journal_entry(db: Session, last_name: str, first_name: str, middle_name: str, lesson_number: int,
+def update_or_create_journal_entry(last_name: str,
+                                   first_name: str, middle_name: str, lesson_number: int,
                                    status: str, date_str):
+    db = SessionLocal()
     student = db.query(User).filter(
         User.last_name == last_name,
         User.first_name == first_name,
@@ -204,4 +215,5 @@ def update_or_create_journal_entry(db: Session, last_name: str, first_name: str,
         db.add(new_entry)
 
     db.commit()
+    db.close()
     return True
