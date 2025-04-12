@@ -3,6 +3,7 @@ import os
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
+from models.LessonLog import LessonLog
 from models.User import User
 from models.Group import Group
 from models.Journal import Journal
@@ -214,6 +215,30 @@ def update_or_create_journal_entry(last_name: str,
             teacher_id=teacher_id
         )
         db.add(new_entry)
+
+    db.commit()
+    db.close()
+    return True
+
+
+def update_or_create_log_entry(teacher_id, group_id, lesson_number: int,
+                                   date_str: str, lesson_data: str):
+    db = SessionLocal()
+
+    try:
+        today = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
+        return []
+
+    new_entry = LessonLog(
+        teacher_id=teacher_id,
+        group_id=group_id,
+        lesson_number=lesson_number,
+        date=today,
+        lesson_data=lesson_data
+    )
+    db.add(new_entry)
 
     db.commit()
     db.close()
