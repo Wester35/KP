@@ -5,7 +5,8 @@ from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
 
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
-                              update_or_create_journal_entry, delete_user_session, get_user_data_by_id)
+                              update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
+                              save_image_path_to_db)
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
@@ -119,7 +120,7 @@ class MainApp(QWidget):
         model = QStandardItemModel()
         model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
         model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество"] + [f"{i + 1} пара" for i in range(7)])
-        print(students.items())
+        
         for (last_name, first_name, middle_name), statuses in students.items():
             row = [
                 QStandardItem(last_name),
@@ -154,10 +155,8 @@ class MainApp(QWidget):
         lesson_number = col - 2
         status = model.item(row, col).text()
 
-        db = SessionLocal()
-        success = update_or_create_journal_entry(db, last_name, first_name, middle_name,
+        success = update_or_create_journal_entry(last_name, first_name, middle_name,
                                                  lesson_number, status, self.get_date())
-        db.close()
 
         if success:
             QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")
@@ -191,7 +190,9 @@ class MainApp(QWidget):
 
     def upload_image(self):
         file_path, _ = QFileDialog.getOpenFileName(self,
-                                                   "Выберите фото", "", "Images (*.png *.jpg *.jpeg)")
+                                                   "Выберите фото",
+                                                   "",
+                                                   "Images (*.png *.jpg *.jpeg)")
         if not file_path:
             return
 
@@ -208,7 +209,7 @@ class MainApp(QWidget):
             img.thumbnail((300, 300))
             img.save(save_path, "JPEG", quality=85)
 
-            self.save_image_path_to_db(save_path)
+            save_image_path_to_db(self.user_id,save_path)
 
             QMessageBox.information(self, "Успешно", "Фото загружено!")
         except Exception as e:
@@ -217,15 +218,6 @@ class MainApp(QWidget):
             self.update_photo(save_path)
 
 
-    def save_image_path_to_db(self, image_path):
-        db = SessionLocal()
-        user = db.query(User).filter(User.id == self.user_id).first()
-        if user:
-            user.photo = image_path
-            db.commit()
-        db.close()
-
     def on_group_selected(self):
         group_id = self.ui.comboBox.currentData()
         self.load_journal_table(group_id)
-
