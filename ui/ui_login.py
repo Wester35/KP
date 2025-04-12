@@ -147,7 +147,7 @@ class Ui_Authorization(object):
         self.toolButton.setObjectName(u"toolButton")
         self.toolButton.setGeometry(QRect(190, 40, 121, 121))
         icon = QIcon()
-        icon.addFile(u"resources/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"resources/app_icon.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.toolButton.setIcon(icon)
         self.toolButton.setIconSize(QSize(78, 78))
         self.frame_2.raise_()

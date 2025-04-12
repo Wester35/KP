@@ -39,11 +39,18 @@ class MainApp(QWidget):
 
             top_layout = QHBoxLayout()
             top_layout.addWidget(self.ui.profileButton)
+            top_layout.addWidget(self.ui.currentDate)
             top_layout.addWidget(self.ui.comboBox)
 
-            center_layout = QHBoxLayout()
+            table_layout = QVBoxLayout()
             self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            center_layout.addWidget(self.ui.tableView)
+            self.ui.pair_teacher.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            table_layout.addWidget(self.ui.pair_teacher)
+            table_layout.addWidget(self.ui.tableView)
+
+            center_layout = QHBoxLayout()
+            # self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            center_layout.addLayout(table_layout)
 
             self.ui.calendarWidget.setFixedSize(341, 451)
             center_layout.addWidget(self.ui.calendarWidget)
@@ -56,9 +63,9 @@ class MainApp(QWidget):
             center_layout.setStretch(1, 1)
 
         #Buttons
-        self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.ui.profileButton.setIcon(QPixmap("ui/resources/app_icon.png"))
         self.ui.profileButton.setFixedSize(72, 72)
-        self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.setWindowIcon(QPixmap("ui/resources/app_icon.png"))
         self.ui.frame.setVisible(False)
 
         self.ui.closeButton.setText("✖")
@@ -76,6 +83,8 @@ class MainApp(QWidget):
         self.load_groups()
         self.on_group_selected()
         self.load_userdata()
+        self.ui.currentDate.setText(f"    Current date: {self.date_today}")
+        self.ui.currentDate.setFixedSize(296, 16)
 
         # Frame
         self.ui.frame.setParent(self)

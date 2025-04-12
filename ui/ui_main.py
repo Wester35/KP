@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uixceiRE.ui'
+## Form generated from reading UI file 'uivTwvOy.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.2
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -60,13 +60,17 @@ class Ui_MainWindow(object):
 "QLabel{\n"
 "font-size:24px;\n"
 "background-color:transparent;\n"
+"}\n"
+"#currentDate{\n"
+"font-size:20px;\n"
+"color:#696969;\n"
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
         self.comboBox.setGeometry(QRect(870, 10, 271, 21))
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setGeometry(QRect(90, 60, 1051, 711))
+        self.tableView.setGeometry(QRect(90, 160, 1051, 611))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
         self.profileButton.setGeometry(QRect(10, 10, 70, 70))
@@ -163,29 +167,37 @@ class Ui_MainWindow(object):
         self.lates = QLabel(self.formLayoutWidget)
         self.lates.setObjectName(u"lates")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.lates)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.lates)
 
         self.latesValue = QLabel(self.formLayoutWidget)
         self.latesValue.setObjectName(u"latesValue")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.latesValue)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.latesValue)
 
         self.absence = QLabel(self.formLayoutWidget)
         self.absence.setObjectName(u"absence")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.absence)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.absence)
 
         self.absenceValue = QLabel(self.formLayoutWidget)
         self.absenceValue.setObjectName(u"absenceValue")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.absenceValue)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.absenceValue)
 
+        self.currentDate = QLabel(MainWindow)
+        self.currentDate.setObjectName(u"currentDate")
+        self.currentDate.setGeometry(QRect(120, 20, 291, 16))
+        self.pair_teacher = QTableView(MainWindow)
+        self.pair_teacher.setObjectName(u"pair_teacher")
+        self.pair_teacher.setGeometry(QRect(90, 70, 1051, 91))
+        self.pair_teacher.raise_()
         self.comboBox.raise_()
         self.tableView.raise_()
         self.profileButton.raise_()
         self.calendarWidget.raise_()
         self.formLayoutWidget.raise_()
         self.frame.raise_()
+        self.currentDate.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -214,5 +226,6 @@ class Ui_MainWindow(object):
         self.latesValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.absence.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043e\u0432:", None))
         self.absenceValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.currentDate.setText("")
     # retranslateUi
 
