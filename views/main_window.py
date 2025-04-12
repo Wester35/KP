@@ -164,7 +164,7 @@ class MainApp(QWidget):
         status = model.item(row, col).text()
 
         success = update_or_create_journal_entry(last_name, first_name, middle_name,
-                                                 lesson_number, status, self.get_date())
+                                                 lesson_number, status, self.get_date(), self.user_id)
 
         if success:
             QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")

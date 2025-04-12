@@ -180,7 +180,7 @@ def get_students_with_journal(group_id, date_str):
 
 def update_or_create_journal_entry(last_name: str,
                                    first_name: str, middle_name: str, lesson_number: int,
-                                   status: str, date_str):
+                                   status: str, date_str: str, teacher_id):
     db = SessionLocal()
     student = db.query(User).filter(
         User.last_name == last_name,
@@ -210,7 +210,8 @@ def update_or_create_journal_entry(last_name: str,
             user_id=student.id,
             date=today,
             lesson_number=lesson_number,
-            status=status
+            status=status,
+            teacher_id=teacher_id
         )
         db.add(new_entry)
 
