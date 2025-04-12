@@ -5,3 +5,7 @@ libs/__pycache__/
 *.pyc
 *.pyo
 *.pyd
+/models/__pycache__
+/controllers/__pycache__
+/ui/__pycache__
+/views/__pycache__
