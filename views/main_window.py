@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePo
 
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
-                              save_image_path_to_db)
+                              save_image_path_to_db, update_or_create_log_entry)
 from libs.database import SessionLocal
 from models.User import User
 from ui.ui_main import Ui_MainWindow as UI_Main
@@ -39,11 +39,17 @@ class MainApp(QWidget):
 
             top_layout = QHBoxLayout()
             top_layout.addWidget(self.ui.profileButton)
+            top_layout.addWidget(self.ui.currentDate)
             top_layout.addWidget(self.ui.comboBox)
 
-            center_layout = QHBoxLayout()
+            table_layout = QVBoxLayout()
             self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            center_layout.addWidget(self.ui.tableView)
+            self.ui.pair_teacher.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            table_layout.addWidget(self.ui.pair_teacher)
+            table_layout.addWidget(self.ui.tableView)
+
+            center_layout = QHBoxLayout()
+            center_layout.addLayout(table_layout)
 
             self.ui.calendarWidget.setFixedSize(341, 451)
             center_layout.addWidget(self.ui.calendarWidget)
@@ -56,9 +62,9 @@ class MainApp(QWidget):
             center_layout.setStretch(1, 1)
 
         #Buttons
-        self.ui.profileButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.ui.profileButton.setIcon(QPixmap("ui/resources/app_icon.png"))
         self.ui.profileButton.setFixedSize(72, 72)
-        self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.setWindowIcon(QPixmap("ui/resources/app_icon.png"))
         self.ui.frame.setVisible(False)
 
         self.ui.closeButton.setText("✖")
@@ -76,6 +82,9 @@ class MainApp(QWidget):
         self.load_groups()
         self.on_group_selected()
         self.load_userdata()
+        self.ui.currentDate.setText(f"    Current date: {self.date_today}")
+        self.ui.currentDate.setFixedSize(296, 16)
+        self.load_teacher_table()
 
         # Frame
         self.ui.frame.setParent(self)
@@ -113,6 +122,27 @@ class MainApp(QWidget):
         delete_user_session()
         self.close()
 
+    def load_teacher_table(self):
+        #требуется добавить загрузку информации из базы данных
+        model = QStandardItemModel()
+        model.setColumnCount(10)
+        model.setHorizontalHeaderLabels(["", "", ""] + [f"{i + 1} пара" for i in range(7)])
+        row = [
+            QStandardItem(""),
+            QStandardItem(""),
+            QStandardItem("")
+        ]
+
+        row[0].setEditable(False)
+        row[1].setEditable(False)
+        row[2].setEditable(False)
+
+
+        model.appendRow(row)
+
+        self.ui.pair_teacher.setModel(model)
+        self.ui.pair_teacher.model().dataChanged.connect(self.save_log_entry)
+
     def load_journal_table(self, group_id):
         """Заполняет таблицу студентами и их статусами за 7 пар."""
         students = get_students_with_journal(group_id, self.get_date())
@@ -141,6 +171,27 @@ class MainApp(QWidget):
         self.ui.tableView.setModel(model)
         self.ui.tableView.model().dataChanged.connect(self.save_journal_entry)
 
+    def save_log_entry(self, index):
+        col = index.column()
+        row = index.row()
+
+
+        if col < 3:
+            return
+
+        model = self.ui.pair_teacher.model()
+        lesson_data = model.item(row, col).text()
+        lesson_number = col - 2
+        group_id = self.ui.comboBox.currentData()
+        date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
+        success = update_or_create_log_entry(self.user_id, group_id, lesson_number,
+                                            date, lesson_data)
+
+        if success:
+            QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")
+        else:
+            QMessageBox.warning(self, "Ошибка", "Студент не найден!")
+
     def save_journal_entry(self, index):
         row = index.row()
         col = index.column()
@@ -156,7 +207,7 @@ class MainApp(QWidget):
         status = model.item(row, col).text()
 
         success = update_or_create_journal_entry(last_name, first_name, middle_name,
-                                                 lesson_number, status, self.get_date())
+                                                 lesson_number, status, self.get_date(), self.user_id)
 
         if success:
             QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")
@@ -221,3 +272,4 @@ class MainApp(QWidget):
     def on_group_selected(self):
         group_id = self.ui.comboBox.currentData()
         self.load_journal_table(group_id)
+        self.load_teacher_table()

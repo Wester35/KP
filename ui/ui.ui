@@ -55,6 +55,10 @@ border-radius:20px;
 QLabel{
 font-size:24px;
 background-color:transparent;
+}
+#currentDate{
+font-size:20px;
+color:#696969;
 }</string>
   </property>
   <widget class="QComboBox" name="comboBox">
@@ -71,9 +75,9 @@ background-color:transparent;
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>60</y>
+     <y>160</y>
      <width>1051</width>
-     <height>711</height>
+     <height>611</height>
     </rect>
    </property>
   </widget>
@@ -432,12 +436,37 @@ background-color:transparent;
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="currentDate">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>20</y>
+     <width>291</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTableView" name="pair_teacher">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>70</y>
+     <width>1051</width>
+     <height>91</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>pair_teacher</zorder>
   <zorder>comboBox</zorder>
   <zorder>tableView</zorder>
   <zorder>profileButton</zorder>
   <zorder>calendarWidget</zorder>
   <zorder>formLayoutWidget</zorder>
   <zorder>frame</zorder>
+  <zorder>currentDate</zorder>
  </widget>
  <resources/>
  <connections/>

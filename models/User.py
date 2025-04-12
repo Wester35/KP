@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Date, Time
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from libs.database import Base
 
 
@@ -20,4 +20,9 @@ class User(Base):
 
     group = relationship("Group", back_populates="users")
 
-    journal_entries = relationship("Journal", back_populates="user")
+    journal_entries_as_student = relationship("Journal",
+                                              foreign_keys="[Journal.user_id]",
+                                              back_populates="student")
+    journal_entries_as_teacher = relationship("Journal",
+                                              foreign_keys="[Journal.teacher_id]",
+                                              back_populates="teacher")
