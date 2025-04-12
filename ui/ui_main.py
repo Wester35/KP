@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uivTwvOy.ui'
+## Form generated from reading UI file 'uieIdeHa.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -64,6 +64,9 @@ class Ui_MainWindow(object):
 "#currentDate{\n"
 "font-size:20px;\n"
 "color:#696969;\n"
+"}\n"
+"#pair_teacher{\n"
+"background-color:#111\n"
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")

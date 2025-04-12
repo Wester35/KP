@@ -49,7 +49,6 @@ class MainApp(QWidget):
             table_layout.addWidget(self.ui.tableView)
 
             center_layout = QHBoxLayout()
-            # self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             center_layout.addLayout(table_layout)
 
             self.ui.calendarWidget.setFixedSize(341, 451)
