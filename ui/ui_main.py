@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uieIdeHa.ui'
+## Form generated from reading UI file 'uiwarvPN.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -73,7 +73,7 @@ class Ui_MainWindow(object):
         self.comboBox.setGeometry(QRect(870, 10, 271, 21))
         self.tableView = QTableView(MainWindow)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setGeometry(QRect(90, 160, 1051, 611))
+        self.tableView.setGeometry(QRect(980, 160, 161, 611))
         self.profileButton = QPushButton(MainWindow)
         self.profileButton.setObjectName(u"profileButton")
         self.profileButton.setGeometry(QRect(10, 10, 70, 70))
@@ -192,7 +192,7 @@ class Ui_MainWindow(object):
         self.currentDate.setGeometry(QRect(120, 20, 291, 16))
         self.pair_teacher = QTableView(MainWindow)
         self.pair_teacher.setObjectName(u"pair_teacher")
-        self.pair_teacher.setGeometry(QRect(90, 70, 1051, 91))
+        self.pair_teacher.setGeometry(QRect(980, 70, 161, 91))
         self.pair_teacher.raise_()
         self.comboBox.raise_()
         self.tableView.raise_()

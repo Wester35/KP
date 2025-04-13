@@ -59,6 +59,9 @@ background-color:transparent;
 #currentDate{
 font-size:20px;
 color:#696969;
+}
+#pair_teacher{
+background-color:#111
 }</string>
   </property>
   <widget class="QComboBox" name="comboBox">
@@ -74,9 +77,9 @@ color:#696969;
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>980</x>
      <y>160</y>
-     <width>1051</width>
+     <width>161</width>
      <height>611</height>
     </rect>
    </property>
@@ -452,9 +455,9 @@ color:#696969;
   <widget class="QTableView" name="pair_teacher">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>980</x>
      <y>70</y>
-     <width>1051</width>
+     <width>161</width>
      <height>91</height>
     </rect>
    </property>
