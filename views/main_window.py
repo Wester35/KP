@@ -121,7 +121,7 @@ class MainApp(QWidget):
 
     def load_teacher_table(self, group_id):
         statuses = get_statuses_from_logs(group_id, self.get_date())
-        
+
         model = QStandardItemModel()
         model.setColumnCount(10)
         model.setHorizontalHeaderLabels(["", "", ""] + [f"{i + 1} пара" for i in range(7)])
