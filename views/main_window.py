@@ -3,12 +3,9 @@ import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
-
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
-                              save_image_path_to_db, update_or_create_log_entry)
-from libs.database import SessionLocal
-from models.User import User
+                              save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs)
 from ui.ui_main import Ui_MainWindow as UI_Main
 
 
@@ -45,6 +42,7 @@ class MainApp(QWidget):
             table_layout = QVBoxLayout()
             self.ui.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             self.ui.pair_teacher.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            self.ui.pair_teacher.setFixedHeight(65)
             table_layout.addWidget(self.ui.pair_teacher)
             table_layout.addWidget(self.ui.tableView)
 
@@ -84,7 +82,6 @@ class MainApp(QWidget):
         self.load_userdata()
         self.ui.currentDate.setText(f"    Current date: {self.date_today}")
         self.ui.currentDate.setFixedSize(296, 16)
-        self.load_teacher_table()
 
         # Frame
         self.ui.frame.setParent(self)
@@ -122,8 +119,9 @@ class MainApp(QWidget):
         delete_user_session()
         self.close()
 
-    def load_teacher_table(self):
-        #требуется добавить загрузку информации из базы данных
+    def load_teacher_table(self, group_id):
+        statuses = get_statuses_from_logs(group_id, self.get_date())
+        
         model = QStandardItemModel()
         model.setColumnCount(10)
         model.setHorizontalHeaderLabels(["", "", ""] + [f"{i + 1} пара" for i in range(7)])
@@ -137,6 +135,9 @@ class MainApp(QWidget):
         row[1].setEditable(False)
         row[2].setEditable(False)
 
+        for status in statuses:
+            item = QStandardItem(status)
+            row.append(item)
 
         model.appendRow(row)
 
@@ -183,9 +184,9 @@ class MainApp(QWidget):
         lesson_data = model.item(row, col).text()
         lesson_number = col - 2
         group_id = self.ui.comboBox.currentData()
-        date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
+
         success = update_or_create_log_entry(self.user_id, group_id, lesson_number,
-                                            date, lesson_data)
+                                            self.get_date(), lesson_data)
 
         if success:
             QMessageBox.information(self, "Сохранено", f"Статус на {lesson_number}-й паре обновлён.")
@@ -272,4 +273,4 @@ class MainApp(QWidget):
     def on_group_selected(self):
         group_id = self.ui.comboBox.currentData()
         self.load_journal_table(group_id)
-        self.load_teacher_table()
+        self.load_teacher_table(group_id)

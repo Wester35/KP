@@ -243,3 +243,35 @@ def update_or_create_log_entry(teacher_id, group_id, lesson_number: int,
     db.commit()
     db.close()
     return True
+
+
+def get_statuses_from_logs(group_id, date_str):
+    db: Session = SessionLocal()
+
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
+        return []
+
+    results = (
+        db.query(
+            LessonLog.lesson_number,
+            LessonLog.lesson_data
+        )
+        .filter(
+            LessonLog.group_id == group_id,
+            LessonLog.date == date_obj
+        )
+        .order_by(LessonLog.lesson_number)
+        .all()
+    )
+
+    db.close()
+
+    lessons = [""] * 7
+    for lesson_number, lesson_data in results:
+        if 1 <= lesson_number <= 7:
+            lessons[lesson_number - 1] = lesson_data or ""
+
+    return lessons
