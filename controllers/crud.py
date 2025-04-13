@@ -3,6 +3,7 @@ import os
 from sqlalchemy import func, and_
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
+from models.LessonLog import LessonLog
 from models.User import User
 from models.Group import Group
 from models.Journal import Journal
@@ -180,7 +181,7 @@ def get_students_with_journal(group_id, date_str):
 
 def update_or_create_journal_entry(last_name: str,
                                    first_name: str, middle_name: str, lesson_number: int,
-                                   status: str, date_str):
+                                   status: str, date_str: str, teacher_id):
     db = SessionLocal()
     student = db.query(User).filter(
         User.last_name == last_name,
@@ -210,10 +211,67 @@ def update_or_create_journal_entry(last_name: str,
             user_id=student.id,
             date=today,
             lesson_number=lesson_number,
-            status=status
+            status=status,
+            teacher_id=teacher_id
         )
         db.add(new_entry)
 
     db.commit()
     db.close()
     return True
+
+
+def update_or_create_log_entry(teacher_id, group_id, lesson_number: int,
+                                   date_str: str, lesson_data: str):
+    db = SessionLocal()
+
+    try:
+        today = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
+        return []
+
+    new_entry = LessonLog(
+        teacher_id=teacher_id,
+        group_id=group_id,
+        lesson_number=lesson_number,
+        date=today,
+        lesson_data=lesson_data
+    )
+    db.add(new_entry)
+
+    db.commit()
+    db.close()
+    return True
+
+
+def get_statuses_from_logs(group_id, date_str):
+    db: Session = SessionLocal()
+
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
+        return []
+
+    results = (
+        db.query(
+            LessonLog.lesson_number,
+            LessonLog.lesson_data
+        )
+        .filter(
+            LessonLog.group_id == group_id,
+            LessonLog.date == date_obj
+        )
+        .order_by(LessonLog.lesson_number)
+        .all()
+    )
+
+    db.close()
+
+    lessons = [""] * 7
+    for lesson_number, lesson_data in results:
+        if 1 <= lesson_number <= 7:
+            lessons[lesson_number - 1] = lesson_data or ""
+
+    return lessons

@@ -10,21 +10,21 @@ db = SessionLocal()
 
 
 
-# Base.metadata.drop_all(engine)
-# Base.metadata.create_all(engine)
-#
-# create_user(
-#     session=db,
-#     last_name="A",
-#     first_name="B",
-#     middle_name="C",
-#     phone="7",
-#     login="west",
-#     password="Admin123",
-#     group_id=None,
-#     is_teacher=True,
-#     is_admin=True
-# )
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
+
+create_user(
+    session=db,
+    last_name="A",
+    first_name="B",
+    middle_name="C",
+    phone="7",
+    login="west",
+    password="Admin123",
+    group_id=None,
+    is_teacher=True,
+    is_admin=True
+)
 
 
 import random
