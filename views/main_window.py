@@ -5,7 +5,8 @@ from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
-                              save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs)
+                              save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
+                              count_statuses_by_student)
 from ui.ui_main import Ui_MainWindow as UI_Main
 from libs.delegates import ComboBoxDelegate
 
@@ -105,6 +106,7 @@ class MainApp(QWidget):
 
     def load_userdata(self):
         user = get_user_data_by_id(self.user_id)
+        stats = count_statuses_by_student(self.user_id)
         self.ui.loginValue.setText(user.login)
         self.ui.surnameValue.setText(user.last_name)
         self.ui.nameValue.setText(user.first_name)
@@ -112,6 +114,8 @@ class MainApp(QWidget):
         self.ui.phoneValue.setText(user.phone)
         self.ui.groupValue.setText(user.group_name)
         self.update_photo(user.photo)
+        self.ui.latesValue.setText(str(stats['о']))
+        self.ui.absenceValue.setText(str(stats['н']))
 
     def get_date(self):
         return self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
@@ -179,7 +183,6 @@ class MainApp(QWidget):
     def save_log_entry(self, index):
         col = index.column()
         row = index.row()
-
 
         if col < 3:
             return
@@ -252,7 +255,6 @@ class MainApp(QWidget):
         if not file_path:
             return
 
-
         save_dir = "libs/user_images"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -272,7 +274,6 @@ class MainApp(QWidget):
             QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
         finally:
             self.update_photo(save_path)
-
 
     def on_group_selected(self):
         group_id = self.ui.comboBox.currentData()

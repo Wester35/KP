@@ -1,6 +1,6 @@
 import json
 import os
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, case
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
 from models.LessonLog import LessonLog
@@ -275,3 +275,25 @@ def get_statuses_from_logs(group_id, date_str):
             lessons[lesson_number - 1] = lesson_data or ""
 
     return lessons
+
+
+def count_statuses_by_student(user_id):
+    db: Session = SessionLocal()
+
+    results = (
+        db.query(
+            func.sum(case((Journal.status == "н", 1), else_=0)).label("count_n"),
+            func.sum(case((Journal.status == "о", 1), else_=0)).label("count_o")
+        )
+        .filter(Journal.user_id == user_id)
+        .one()
+    )
+
+    db.close()
+
+    count_n, count_o = results
+
+    return {
+        "н": count_n,
+        "о": count_o
+    }
