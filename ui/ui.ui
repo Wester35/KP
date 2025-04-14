@@ -43,7 +43,7 @@ background-color:#333;
 QWidget{
 background-color:#282226
 }
-#tableView{
+QTableView{
 background-color:#111
 }
 #comboBox{
@@ -59,9 +59,6 @@ background-color:transparent;
 #currentDate{
 font-size:20px;
 color:#696969;
-}
-#pair_teacher{
-background-color:#111
 }</string>
   </property>
   <widget class="QComboBox" name="comboBox">
@@ -442,10 +439,10 @@ background-color:#111
   <widget class="QLabel" name="currentDate">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>20</y>
+     <x>90</x>
+     <y>36</y>
      <width>291</width>
-     <height>16</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
@@ -462,6 +459,16 @@ background-color:#111
     </rect>
    </property>
   </widget>
+  <widget class="QTableView" name="studentLatesView">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>530</y>
+     <width>256</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
   <zorder>pair_teacher</zorder>
   <zorder>comboBox</zorder>
   <zorder>tableView</zorder>
@@ -470,6 +477,7 @@ background-color:#111
   <zorder>formLayoutWidget</zorder>
   <zorder>frame</zorder>
   <zorder>currentDate</zorder>
+  <zorder>studentLatesView</zorder>
  </widget>
  <resources/>
  <connections/>

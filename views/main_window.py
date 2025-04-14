@@ -26,6 +26,15 @@ class MainApp(QWidget):
             self.ui.calendarWidget.setVisible(False)
             self.ui.pair_teacher.setVisible(False)
             self.resize(800, 780)
+
+            # main_layout = QVBoxLayout(self)
+            #
+            # down_layout = QHBoxLayout()
+            # self.ui.studentLatesView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            # down_layout.addWidget(self.ui.studentLatesView)
+            # # main_layout.addWidget(self.ui.)
+            # main_layout.addLayout(down_layout)
+            # self.setLayout(main_layout)
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
@@ -33,6 +42,8 @@ class MainApp(QWidget):
                 self.resize(1050, 780)
             elif self.is_admin:
                 self.ui.formLayoutWidget.setVisible(False)
+
+            self.ui.studentLatesView.setVisible(False)
 
             main_layout = QVBoxLayout(self)
 
@@ -267,7 +278,7 @@ class MainApp(QWidget):
             img.thumbnail((300, 300))
             img.save(save_path, "JPEG", quality=85)
 
-            save_image_path_to_db(self.user_id,save_path)
+            save_image_path_to_db(self.user_id, save_path)
 
             QMessageBox.information(self, "Успешно", "Фото загружено!")
         except Exception as e:

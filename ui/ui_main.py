@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiwarvPN.ui'
+## Form generated from reading UI file 'uiSjLnnc.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
 "QWidget{\n"
 "background-color:#282226\n"
 "}\n"
-"#tableView{\n"
+"QTableView{\n"
 "background-color:#111\n"
 "}\n"
 "#comboBox{\n"
@@ -64,9 +64,6 @@ class Ui_MainWindow(object):
 "#currentDate{\n"
 "font-size:20px;\n"
 "color:#696969;\n"
-"}\n"
-"#pair_teacher{\n"
-"background-color:#111\n"
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
@@ -189,10 +186,13 @@ class Ui_MainWindow(object):
 
         self.currentDate = QLabel(MainWindow)
         self.currentDate.setObjectName(u"currentDate")
-        self.currentDate.setGeometry(QRect(120, 20, 291, 16))
+        self.currentDate.setGeometry(QRect(90, 36, 291, 20))
         self.pair_teacher = QTableView(MainWindow)
         self.pair_teacher.setObjectName(u"pair_teacher")
         self.pair_teacher.setGeometry(QRect(980, 70, 161, 91))
+        self.studentLatesView = QTableView(MainWindow)
+        self.studentLatesView.setObjectName(u"studentLatesView")
+        self.studentLatesView.setGeometry(QRect(100, 530, 256, 192))
         self.pair_teacher.raise_()
         self.comboBox.raise_()
         self.tableView.raise_()
@@ -201,6 +201,7 @@ class Ui_MainWindow(object):
         self.formLayoutWidget.raise_()
         self.frame.raise_()
         self.currentDate.raise_()
+        self.studentLatesView.raise_()
 
         self.retranslateUi(MainWindow)
 
