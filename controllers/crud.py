@@ -222,27 +222,47 @@ def update_or_create_journal_entry(last_name: str,
 
 
 def update_or_create_log_entry(teacher_id, group_id, lesson_number: int,
-                                   date_str: str, lesson_data: str):
+                                date_str: str, lesson_data: str):
     db = SessionLocal()
 
     try:
         today = datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
         print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
-        return []
+        db.close()
+        return False
 
-    new_entry = LessonLog(
-        teacher_id=teacher_id,
-        group_id=group_id,
-        lesson_number=lesson_number,
-        date=today,
-        lesson_data=lesson_data
-    )
-    db.add(new_entry)
+    try:
+        entry = db.query(LessonLog).filter_by(
+            teacher_id=teacher_id,
+            group_id=group_id,
+            lesson_number=lesson_number,
+            date=today
+        ).first()
 
-    db.commit()
-    db.close()
-    return True
+        if entry:
+            entry.lesson_data = lesson_data
+        else:
+            entry = LessonLog(
+                teacher_id=teacher_id,
+                group_id=group_id,
+                lesson_number=lesson_number,
+                date=today,
+                lesson_data=lesson_data
+            )
+            db.add(entry)
+
+        db.commit()
+        return True
+
+    except Exception as e:
+        print(f"Ошибка при сохранении записи: {e}")
+        db.rollback()
+        return False
+
+    finally:
+        db.close()
+
 
 
 def get_statuses_from_logs(group_id, date_str):
