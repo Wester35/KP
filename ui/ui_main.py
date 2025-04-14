@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiSjLnnc.ui'
+## Form generated from reading UI file 'uijmqwLP.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -193,6 +193,8 @@ class Ui_MainWindow(object):
         self.studentLatesView = QTableView(MainWindow)
         self.studentLatesView.setObjectName(u"studentLatesView")
         self.studentLatesView.setGeometry(QRect(100, 530, 256, 192))
+        self.studentLatesView.raise_()
+        self.currentDate.raise_()
         self.pair_teacher.raise_()
         self.comboBox.raise_()
         self.tableView.raise_()
@@ -200,8 +202,6 @@ class Ui_MainWindow(object):
         self.calendarWidget.raise_()
         self.formLayoutWidget.raise_()
         self.frame.raise_()
-        self.currentDate.raise_()
-        self.studentLatesView.raise_()
 
         self.retranslateUi(MainWindow)
 

@@ -27,14 +27,24 @@ class MainApp(QWidget):
             self.ui.pair_teacher.setVisible(False)
             self.resize(800, 780)
 
-            # main_layout = QVBoxLayout(self)
-            #
-            # down_layout = QHBoxLayout()
-            # self.ui.studentLatesView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            # down_layout.addWidget(self.ui.studentLatesView)
-            # # main_layout.addWidget(self.ui.)
-            # main_layout.addLayout(down_layout)
-            # self.setLayout(main_layout)
+            main_layout = QVBoxLayout(self)
+
+            top_layout = QHBoxLayout()
+            top_layout.addWidget(self.ui.profileButton)
+            top_layout.addStretch()
+            top_layout.addWidget(self.ui.currentDate)
+            main_layout.addLayout(top_layout)
+
+            form_layout = QHBoxLayout()
+            form_layout.addWidget(self.ui.formLayoutWidget)
+            form_layout.addStretch()
+            main_layout.addLayout(form_layout)
+
+            self.ui.studentLatesView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            main_layout.addWidget(self.ui.studentLatesView)
+
+            self.setLayout(main_layout)
+
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
@@ -48,7 +58,9 @@ class MainApp(QWidget):
             main_layout = QVBoxLayout(self)
 
             top_layout = QHBoxLayout()
-            top_layout.addWidget(self.ui.profileButton)
+            top_layout.addWidget(self.ui.profileButton, alignment=Qt.AlignLeft)
+            top_layout.addStretch(0, 0)
+
             top_layout.addWidget(self.ui.currentDate)
             top_layout.addWidget(self.ui.comboBox)
 

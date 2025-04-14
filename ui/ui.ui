@@ -469,6 +469,8 @@ color:#696969;
     </rect>
    </property>
   </widget>
+  <zorder>studentLatesView</zorder>
+  <zorder>currentDate</zorder>
   <zorder>pair_teacher</zorder>
   <zorder>comboBox</zorder>
   <zorder>tableView</zorder>
@@ -476,8 +478,6 @@ color:#696969;
   <zorder>calendarWidget</zorder>
   <zorder>formLayoutWidget</zorder>
   <zorder>frame</zorder>
-  <zorder>currentDate</zorder>
-  <zorder>studentLatesView</zorder>
  </widget>
  <resources/>
  <connections/>
