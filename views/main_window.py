@@ -7,6 +7,7 @@ from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
                               save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs)
 from ui.ui_main import Ui_MainWindow as UI_Main
+from libs.delegates import ComboBoxDelegate
 
 
 class MainApp(QWidget):
@@ -22,15 +23,15 @@ class MainApp(QWidget):
             self.ui.tableView.setVisible(False)
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
+            self.ui.pair_teacher.setVisible(False)
             self.resize(800, 780)
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
-                self.resize(1050, 780)
                 self.ui.formLayoutWidget.setVisible(False)
+                self.resize(1050, 780)
             elif self.is_admin:
                 self.ui.formLayoutWidget.setVisible(False)
-                self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
             main_layout = QVBoxLayout(self)
 
@@ -145,13 +146,16 @@ class MainApp(QWidget):
         self.ui.pair_teacher.model().dataChanged.connect(self.save_log_entry)
 
     def load_journal_table(self, group_id):
-        """Заполняет таблицу студентами и их статусами за 7 пар."""
         students = get_students_with_journal(group_id, self.get_date())
 
         model = QStandardItemModel()
-        model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
+        model.setColumnCount(10)
         model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество"] + [f"{i + 1} пара" for i in range(7)])
-        
+
+        delegate = ComboBoxDelegate(self.ui.tableView)
+        for col in range(3, 10):
+            self.ui.tableView.setItemDelegateForColumn(col, delegate)
+
         for (last_name, first_name, middle_name), statuses in students.items():
             row = [
                 QStandardItem(last_name),
