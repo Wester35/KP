@@ -58,9 +58,7 @@ class MainApp(QWidget):
             main_layout = QVBoxLayout(self)
 
             top_layout = QHBoxLayout()
-            top_layout.addWidget(self.ui.profileButton, alignment=Qt.AlignLeft)
-            top_layout.addStretch(0, 0)
-
+            top_layout.addWidget(self.ui.profileButton)
             top_layout.addWidget(self.ui.currentDate)
             top_layout.addWidget(self.ui.comboBox)
 
