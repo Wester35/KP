@@ -45,7 +45,8 @@ class MainApp(QWidget):
             main_layout.addWidget(self.ui.studentLatesView)
 
             self.setLayout(main_layout)
-
+            
+            self.load_student_lates_table()
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
@@ -138,7 +139,6 @@ class MainApp(QWidget):
         self.update_photo(user.photo)
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
-        self.load_student_lates_table()
 
     def load_student_lates_table(self):
         statuses = get_lates_and_absences_by_date(self.user_id)
