@@ -2,11 +2,12 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
+from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
+    QHeaderView
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
                               save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
-                              count_statuses_by_student)
+                              count_statuses_by_student, get_lates_and_absences_by_date)
 from ui.ui_main import Ui_MainWindow as UI_Main
 from libs.delegates import ComboBoxDelegate
 
@@ -137,6 +138,30 @@ class MainApp(QWidget):
         self.update_photo(user.photo)
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
+        self.load_student_lates_table()
+
+    def load_student_lates_table(self):
+        statuses = get_lates_and_absences_by_date(self.user_id)
+
+        model = QStandardItemModel()
+        model.setColumnCount(3)
+        model.setHorizontalHeaderLabels(["Дата", "Опоздания", "Пропуски"])
+
+        for date, lates, absences in statuses:
+            row = [
+                QStandardItem(str(date)),
+                QStandardItem(str(lates)),
+                QStandardItem(str(absences))
+            ]
+            for item in row:
+                item.setEditable(False)
+            model.appendRow(row)
+
+        self.ui.studentLatesView.setModel(model)
+        self.ui.studentLatesView.horizontalHeader().setStretchLastSection(True)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
 
     def get_date(self):
         return self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
