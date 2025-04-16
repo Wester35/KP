@@ -2,6 +2,8 @@
 __pycache__/
 **/__pycache__/
 libs/__pycache__/
+libs/user_images/
+libs/user_session.json
 *.pyc
 *.pyo
 *.pyd
