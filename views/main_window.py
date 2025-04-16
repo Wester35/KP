@@ -140,7 +140,11 @@ class MainApp(QWidget):
         self.update_photo(user.photo)
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
-        self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
+        if (stats['н'] is None) or (attendances is None):
+            self.ui.percentageOfAttendenceValue.setText("None")
+        else:
+            self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
+
 
     def load_student_lates_table(self):
         statuses = get_lates_and_absences_by_date(self.user_id)
