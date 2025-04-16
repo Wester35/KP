@@ -15,8 +15,8 @@ class Auth(QWidget):
 
         self.ui.pushButton.clicked.connect(self.handle_login)
 
-        self.ui.toolButton.setIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
-        self.setWindowIcon(QPixmap("ui/resources/free-icon-login-1674704.png"))
+        self.ui.toolButton.setIcon(QPixmap("ui/resources/app_icon.png"))
+        self.setWindowIcon(QPixmap("ui/resources/app_icon.png"))
         self.background = QLabel(self.ui.frame_2)
         self.background.setGeometry(0, 0, 600, 600)
 
