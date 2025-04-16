@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePo
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
                               save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
-                              count_statuses_by_student, get_lates_and_absences_by_date)
+                              count_statuses_by_student, get_lates_and_absences_by_date, count_lessons_for_group)
 from ui.ui_main import Ui_MainWindow as UI_Main
 from libs.delegates import ComboBoxDelegate
 
@@ -45,7 +45,7 @@ class MainApp(QWidget):
             main_layout.addWidget(self.ui.studentLatesView)
 
             self.setLayout(main_layout)
-            
+
             self.load_student_lates_table()
         else:
             if (not self.is_admin) and self.is_teacher:
@@ -130,6 +130,7 @@ class MainApp(QWidget):
     def load_userdata(self):
         user = get_user_data_by_id(self.user_id)
         stats = count_statuses_by_student(self.user_id)
+        attendances = count_lessons_for_group(user.group_id)
         self.ui.loginValue.setText(user.login)
         self.ui.surnameValue.setText(user.last_name)
         self.ui.nameValue.setText(user.first_name)
@@ -139,6 +140,7 @@ class MainApp(QWidget):
         self.update_photo(user.photo)
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
+        self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
 
     def load_student_lates_table(self):
         statuses = get_lates_and_absences_by_date(self.user_id)

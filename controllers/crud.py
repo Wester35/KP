@@ -337,3 +337,20 @@ def get_lates_and_absences_by_date(user_id):
     db.close()
 
     return results
+
+
+def count_lessons_for_group(group_id: int):
+    db: Session = SessionLocal()
+
+    count = (
+        db.query(func.count())
+        .filter(
+            LessonLog.group_id == group_id,
+            LessonLog.lesson_data != "",
+            LessonLog.lesson_data.isnot(None)
+        )
+        .scalar()
+    )
+
+    db.close()
+    return count
