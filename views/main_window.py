@@ -47,6 +47,7 @@ class MainApp(QWidget):
             self.setLayout(main_layout)
 
             self.load_student_lates_table()
+            self.load_student_data()
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
@@ -129,8 +130,6 @@ class MainApp(QWidget):
 
     def load_userdata(self):
         user = get_user_data_by_id(self.user_id)
-        stats = count_statuses_by_student(self.user_id)
-        attendances = count_lessons_for_group(user.group_id)
         self.ui.loginValue.setText(user.login)
         self.ui.surnameValue.setText(user.last_name)
         self.ui.nameValue.setText(user.first_name)
@@ -138,13 +137,17 @@ class MainApp(QWidget):
         self.ui.phoneValue.setText(user.phone)
         self.ui.groupValue.setText(user.group_name)
         self.update_photo(user.photo)
+
+    def load_student_data(self):
+        user = get_user_data_by_id(self.user_id)
+        stats = count_statuses_by_student(self.user_id)
+        attendances = count_lessons_for_group(user.group_id)
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
         if (stats['н'] is None) or (attendances is None):
             self.ui.percentageOfAttendenceValue.setText("100 %")
         else:
             self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
-
 
     def load_student_lates_table(self):
         statuses = get_lates_and_absences_by_date(self.user_id)
@@ -231,6 +234,9 @@ class MainApp(QWidget):
 
         self.ui.tableView.setModel(model)
         self.ui.tableView.model().dataChanged.connect(self.save_journal_entry)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
 
     def save_log_entry(self, index):
         col = index.column()
