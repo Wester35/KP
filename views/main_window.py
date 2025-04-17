@@ -141,7 +141,7 @@ class MainApp(QWidget):
         self.ui.latesValue.setText(str(stats['о']))
         self.ui.absenceValue.setText(str(stats['н']))
         if (stats['н'] is None) or (attendances is None):
-            self.ui.percentageOfAttendenceValue.setText("None")
+            self.ui.percentageOfAttendenceValue.setText("100 %")
         else:
             self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
 
@@ -156,8 +156,8 @@ class MainApp(QWidget):
         for date, lates, absences in statuses:
             row = [
                 QStandardItem(str(date)),
-                QStandardItem(str(lates)),
-                QStandardItem(str(absences))
+                QStandardItem(str(absences)),
+                QStandardItem(str(lates))
             ]
             for item in row:
                 item.setEditable(False)

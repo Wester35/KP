@@ -325,8 +325,8 @@ def get_lates_and_absences_by_date(user_id):
     results = (
         db.query(
             Journal.date,
-            func.count(case((Journal.status == "н", 1))).label("lates"),
-            func.count(case((Journal.status == "о", 1))).label("absences")
+            func.count(case((Journal.status == "н", 1))).label("absences"),
+            func.count(case((Journal.status == "о", 1))).label("lates")
         )
         .filter(Journal.user_id == user_id)
         .group_by(Journal.date)
