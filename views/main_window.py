@@ -2,11 +2,14 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout
+from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
+    QHeaderView
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
-                              save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs)
+                              save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
+                              count_statuses_by_student, get_lates_and_absences_by_date, count_lessons_for_group)
 from ui.ui_main import Ui_MainWindow as UI_Main
+from libs.delegates import ComboBoxDelegate
 
 
 class MainApp(QWidget):
@@ -22,15 +25,38 @@ class MainApp(QWidget):
             self.ui.tableView.setVisible(False)
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
+            self.ui.pair_teacher.setVisible(False)
             self.resize(800, 780)
+
+            main_layout = QVBoxLayout(self)
+
+            top_layout = QHBoxLayout()
+            top_layout.addWidget(self.ui.profileButton)
+            top_layout.addStretch()
+            top_layout.addWidget(self.ui.currentDate)
+            main_layout.addLayout(top_layout)
+
+            form_layout = QHBoxLayout()
+            form_layout.addWidget(self.ui.formLayoutWidget)
+            form_layout.addStretch()
+            main_layout.addLayout(form_layout)
+
+            self.ui.studentLatesView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            main_layout.addWidget(self.ui.studentLatesView)
+
+            self.setLayout(main_layout)
+
+            self.load_student_lates_table()
+            self.load_student_data()
         else:
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
-                self.resize(1050, 780)
                 self.ui.formLayoutWidget.setVisible(False)
+                self.resize(1050, 780)
             elif self.is_admin:
                 self.ui.formLayoutWidget.setVisible(False)
-                self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+            self.ui.studentLatesView.setVisible(False)
 
             main_layout = QVBoxLayout(self)
 
@@ -112,6 +138,54 @@ class MainApp(QWidget):
         self.ui.groupValue.setText(user.group_name)
         self.update_photo(user.photo)
 
+    def load_student_data(self):
+        user = get_user_data_by_id(self.user_id)
+        stats = count_statuses_by_student(self.user_id)
+        attendances = count_lessons_for_group(user.group_id)
+
+        if stats['о'] is not None:
+            self.ui.latesValue.setText(str(stats['о']))
+        else:
+            self.ui.latesValue.setText("0")
+
+        if stats['н'] is not None:
+            self.ui.absenceValue.setText(str(stats['н']))
+        else:
+            self.ui.absenceValue.setText("0")
+
+        if (stats['н'] is None) or (attendances is None):
+            self.ui.percentageOfAttendenceValue.setText("100 %")
+        else:
+            self.ui.percentageOfAttendenceValue.setText(f"{(((attendances - stats['н']) / attendances) * 100):.2f} %")
+
+        if (stats['о'] is None) or (attendances is None):
+            self.ui.percentageOfLatesValue.setText("0 %")
+        else:
+            self.ui.percentageOfLatesValue.setText(f"{((stats['о'] / attendances) * 100):.2f} %")
+
+    def load_student_lates_table(self):
+        statuses = get_lates_and_absences_by_date(self.user_id)
+
+        model = QStandardItemModel()
+        model.setColumnCount(3)
+        model.setHorizontalHeaderLabels(["Дата", "Опоздания", "Пропуски"])
+
+        for date, lates, absences in statuses:
+            row = [
+                QStandardItem(str(date)),
+                QStandardItem(str(absences)),
+                QStandardItem(str(lates))
+            ]
+            for item in row:
+                item.setEditable(False)
+            model.appendRow(row)
+
+        self.ui.studentLatesView.setModel(model)
+        self.ui.studentLatesView.horizontalHeader().setStretchLastSection(True)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.ui.studentLatesView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+
     def get_date(self):
         return self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
 
@@ -145,13 +219,16 @@ class MainApp(QWidget):
         self.ui.pair_teacher.model().dataChanged.connect(self.save_log_entry)
 
     def load_journal_table(self, group_id):
-        """Заполняет таблицу студентами и их статусами за 7 пар."""
         students = get_students_with_journal(group_id, self.get_date())
 
         model = QStandardItemModel()
-        model.setColumnCount(10)  # Фамилия, Имя, Отчество + 7 пар
+        model.setColumnCount(10)
         model.setHorizontalHeaderLabels(["Фамилия", "Имя", "Отчество"] + [f"{i + 1} пара" for i in range(7)])
-        
+
+        delegate = ComboBoxDelegate(self.ui.tableView)
+        for col in range(3, 10):
+            self.ui.tableView.setItemDelegateForColumn(col, delegate)
+
         for (last_name, first_name, middle_name), statuses in students.items():
             row = [
                 QStandardItem(last_name),
@@ -171,11 +248,13 @@ class MainApp(QWidget):
 
         self.ui.tableView.setModel(model)
         self.ui.tableView.model().dataChanged.connect(self.save_journal_entry)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
 
     def save_log_entry(self, index):
         col = index.column()
         row = index.row()
-
 
         if col < 3:
             return
@@ -248,7 +327,6 @@ class MainApp(QWidget):
         if not file_path:
             return
 
-
         save_dir = "libs/user_images"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -261,14 +339,13 @@ class MainApp(QWidget):
             img.thumbnail((300, 300))
             img.save(save_path, "JPEG", quality=85)
 
-            save_image_path_to_db(self.user_id,save_path)
+            save_image_path_to_db(self.user_id, save_path)
 
             QMessageBox.information(self, "Успешно", "Фото загружено!")
         except Exception as e:
             QMessageBox.warning(self, "Ошибка", f"Не удалось загрузить фото: {str(e)}")
         finally:
             self.update_photo(save_path)
-
 
     def on_group_selected(self):
         group_id = self.ui.comboBox.currentData()

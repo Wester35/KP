@@ -43,7 +43,7 @@ background-color:#333;
 QWidget{
 background-color:#282226
 }
-#tableView{
+QTableView{
 background-color:#111
 }
 #comboBox{
@@ -59,9 +59,6 @@ background-color:transparent;
 #currentDate{
 font-size:20px;
 color:#696969;
-}
-#pair_teacher{
-background-color:#111
 }</string>
   </property>
   <widget class="QComboBox" name="comboBox">
@@ -412,7 +409,7 @@ background-color:#111
     <item row="0" column="0">
      <widget class="QLabel" name="lates">
       <property name="text">
-       <string>Количество опозданий:</string>
+       <string>    Количество опозданий:</string>
       </property>
      </widget>
     </item>
@@ -426,7 +423,7 @@ background-color:#111
     <item row="1" column="0">
      <widget class="QLabel" name="absence">
       <property name="text">
-       <string>Количество пропусков:</string>
+       <string>    Количество пропусков:</string>
       </property>
      </widget>
     </item>
@@ -437,15 +434,43 @@ background-color:#111
       </property>
      </widget>
     </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="percentageOfAttendence">
+      <property name="text">
+       <string>    Процент посещаемости:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="percentageOfAttendenceValue">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="percentageOfLates">
+      <property name="text">
+       <string>    Процент опозданий:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="percentageOfLatesValue">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QLabel" name="currentDate">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>20</y>
+     <x>90</x>
+     <y>36</y>
      <width>291</width>
-     <height>16</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
@@ -462,6 +487,18 @@ background-color:#111
     </rect>
    </property>
   </widget>
+  <widget class="QTableView" name="studentLatesView">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>530</y>
+     <width>256</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>studentLatesView</zorder>
+  <zorder>currentDate</zorder>
   <zorder>pair_teacher</zorder>
   <zorder>comboBox</zorder>
   <zorder>tableView</zorder>
@@ -469,7 +506,6 @@ background-color:#111
   <zorder>calendarWidget</zorder>
   <zorder>formLayoutWidget</zorder>
   <zorder>frame</zorder>
-  <zorder>currentDate</zorder>
  </widget>
  <resources/>
  <connections/>

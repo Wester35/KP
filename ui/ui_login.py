@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'authOJaJCY.ui'
+## Form generated from reading UI file 'authTIieGC.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.2
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -138,16 +138,16 @@ class Ui_Authorization(object):
         self.checkBox.setAcceptDrops(False)
         self.frame_2 = QFrame(Authorization)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(0, 0, 501, 520))
-        self.frame_2.setMinimumSize(QSize(501, 520))
-        self.frame_2.setMaximumSize(QSize(501, 520))
+        self.frame_2.setGeometry(QRect(0, 0, 501, 532))
+        self.frame_2.setMinimumSize(QSize(501, 532))
+        self.frame_2.setMaximumSize(QSize(501, 532))
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
         self.toolButton = QToolButton(Authorization)
         self.toolButton.setObjectName(u"toolButton")
         self.toolButton.setGeometry(QRect(190, 40, 121, 121))
         icon = QIcon()
-        icon.addFile(u"resources/app_icon.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"resources/free-icon-login-1674704.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.toolButton.setIcon(icon)
         self.toolButton.setIconSize(QSize(78, 78))
         self.frame_2.raise_()

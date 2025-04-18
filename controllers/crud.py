@@ -1,6 +1,6 @@
 import json
 import os
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, case
 from sqlalchemy.orm import Session
 from libs.database import SessionLocal
 from models.LessonLog import LessonLog
@@ -222,27 +222,47 @@ def update_or_create_journal_entry(last_name: str,
 
 
 def update_or_create_log_entry(teacher_id, group_id, lesson_number: int,
-                                   date_str: str, lesson_data: str):
+                                date_str: str, lesson_data: str):
     db = SessionLocal()
 
     try:
         today = datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
         print("Ошибка: неверный формат даты, ожидается YYYY-MM-DD")
-        return []
+        db.close()
+        return False
 
-    new_entry = LessonLog(
-        teacher_id=teacher_id,
-        group_id=group_id,
-        lesson_number=lesson_number,
-        date=today,
-        lesson_data=lesson_data
-    )
-    db.add(new_entry)
+    try:
+        entry = db.query(LessonLog).filter_by(
+            teacher_id=teacher_id,
+            group_id=group_id,
+            lesson_number=lesson_number,
+            date=today
+        ).first()
 
-    db.commit()
-    db.close()
-    return True
+        if entry:
+            entry.lesson_data = lesson_data
+        else:
+            entry = LessonLog(
+                teacher_id=teacher_id,
+                group_id=group_id,
+                lesson_number=lesson_number,
+                date=today,
+                lesson_data=lesson_data
+            )
+            db.add(entry)
+
+        db.commit()
+        return True
+
+    except Exception as e:
+        print(f"Ошибка при сохранении записи: {e}")
+        db.rollback()
+        return False
+
+    finally:
+        db.close()
+
 
 
 def get_statuses_from_logs(group_id, date_str):
@@ -275,3 +295,62 @@ def get_statuses_from_logs(group_id, date_str):
             lessons[lesson_number - 1] = lesson_data or ""
 
     return lessons
+
+
+def count_statuses_by_student(user_id):
+    db: Session = SessionLocal()
+
+    results = (
+        db.query(
+            func.sum(case((Journal.status == "н", 1), else_=0)).label("count_n"),
+            func.sum(case((Journal.status == "о", 1), else_=0)).label("count_o")
+        )
+        .filter(Journal.user_id == user_id)
+        .one()
+    )
+
+    db.close()
+
+    count_n, count_o = results
+
+    return {
+        "н": count_n,
+        "о": count_o
+    }
+
+
+def get_lates_and_absences_by_date(user_id):
+    db: Session = SessionLocal()
+
+    results = (
+        db.query(
+            Journal.date,
+            func.count(case((Journal.status == "н", 1))).label("absences"),
+            func.count(case((Journal.status == "о", 1))).label("lates")
+        )
+        .filter(Journal.user_id == user_id)
+        .group_by(Journal.date)
+        .order_by(Journal.date)
+        .all()
+    )
+
+    db.close()
+
+    return results
+
+
+def count_lessons_for_group(group_id: int):
+    db: Session = SessionLocal()
+
+    count = (
+        db.query(func.count())
+        .filter(
+            LessonLog.group_id == group_id,
+            LessonLog.lesson_data != "",
+            LessonLog.lesson_data.isnot(None)
+        )
+        .scalar()
+    )
+
+    db.close()
+    return count

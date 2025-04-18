@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiwarvPN.ui'
+## Form generated from reading UI file 'uiNbbBOl.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
 "QWidget{\n"
 "background-color:#282226\n"
 "}\n"
-"#tableView{\n"
+"QTableView{\n"
 "background-color:#111\n"
 "}\n"
 "#comboBox{\n"
@@ -64,9 +64,6 @@ class Ui_MainWindow(object):
 "#currentDate{\n"
 "font-size:20px;\n"
 "color:#696969;\n"
-"}\n"
-"#pair_teacher{\n"
-"background-color:#111\n"
 "}")
         self.comboBox = QComboBox(MainWindow)
         self.comboBox.setObjectName(u"comboBox")
@@ -187,12 +184,37 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.absenceValue)
 
+        self.percentageOfAttendence = QLabel(self.formLayoutWidget)
+        self.percentageOfAttendence.setObjectName(u"percentageOfAttendence")
+
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.percentageOfAttendence)
+
+        self.percentageOfAttendenceValue = QLabel(self.formLayoutWidget)
+        self.percentageOfAttendenceValue.setObjectName(u"percentageOfAttendenceValue")
+
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.percentageOfAttendenceValue)
+
+        self.percentageOfLates = QLabel(self.formLayoutWidget)
+        self.percentageOfLates.setObjectName(u"percentageOfLates")
+
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.percentageOfLates)
+
+        self.percentageOfLatesValue = QLabel(self.formLayoutWidget)
+        self.percentageOfLatesValue.setObjectName(u"percentageOfLatesValue")
+
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.percentageOfLatesValue)
+
         self.currentDate = QLabel(MainWindow)
         self.currentDate.setObjectName(u"currentDate")
-        self.currentDate.setGeometry(QRect(120, 20, 291, 16))
+        self.currentDate.setGeometry(QRect(90, 36, 291, 20))
         self.pair_teacher = QTableView(MainWindow)
         self.pair_teacher.setObjectName(u"pair_teacher")
         self.pair_teacher.setGeometry(QRect(980, 70, 161, 91))
+        self.studentLatesView = QTableView(MainWindow)
+        self.studentLatesView.setObjectName(u"studentLatesView")
+        self.studentLatesView.setGeometry(QRect(100, 530, 256, 192))
+        self.studentLatesView.raise_()
+        self.currentDate.raise_()
         self.pair_teacher.raise_()
         self.comboBox.raise_()
         self.tableView.raise_()
@@ -200,7 +222,6 @@ class Ui_MainWindow(object):
         self.calendarWidget.raise_()
         self.formLayoutWidget.raise_()
         self.frame.raise_()
-        self.currentDate.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -225,10 +246,14 @@ class Ui_MainWindow(object):
         self.phoneValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.group.setText(QCoreApplication.translate("MainWindow", u"\u0413\u0440\u0443\u043f\u043f\u0430:", None))
         self.groupValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.lates.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043e\u043f\u043e\u0437\u0434\u0430\u043d\u0438\u0439:", None))
+        self.lates.setText(QCoreApplication.translate("MainWindow", u"    \u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043e\u043f\u043e\u0437\u0434\u0430\u043d\u0438\u0439:", None))
         self.latesValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.absence.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043e\u0432:", None))
+        self.absence.setText(QCoreApplication.translate("MainWindow", u"    \u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043e\u0432:", None))
         self.absenceValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.percentageOfAttendence.setText(QCoreApplication.translate("MainWindow", u"    \u041f\u0440\u043e\u0446\u0435\u043d\u0442 \u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438:", None))
+        self.percentageOfAttendenceValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.percentageOfLates.setText(QCoreApplication.translate("MainWindow", u"    \u041f\u0440\u043e\u0446\u0435\u043d\u0442 \u043e\u043f\u043e\u0437\u0434\u0430\u043d\u0438\u0439:", None))
+        self.percentageOfLatesValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.currentDate.setText("")
     # retranslateUi
 
