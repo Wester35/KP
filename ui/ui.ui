@@ -409,7 +409,7 @@ color:#696969;
     <item row="0" column="0">
      <widget class="QLabel" name="lates">
       <property name="text">
-       <string>Количество опозданий:</string>
+       <string>    Количество опозданий:</string>
       </property>
      </widget>
     </item>
@@ -423,7 +423,7 @@ color:#696969;
     <item row="1" column="0">
      <widget class="QLabel" name="absence">
       <property name="text">
-       <string>Количество пропусков:</string>
+       <string>    Количество пропусков:</string>
       </property>
      </widget>
     </item>
@@ -437,12 +437,26 @@ color:#696969;
     <item row="2" column="0">
      <widget class="QLabel" name="percentageOfAttendence">
       <property name="text">
-       <string>Процент посещаемости:</string>
+       <string>    Процент посещаемости:</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
      <widget class="QLabel" name="percentageOfAttendenceValue">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="percentageOfLates">
+      <property name="text">
+       <string>    Процент опозданий:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="percentageOfLatesValue">
       <property name="text">
        <string>TextLabel</string>
       </property>

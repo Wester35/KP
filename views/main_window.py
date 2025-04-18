@@ -142,12 +142,26 @@ class MainApp(QWidget):
         user = get_user_data_by_id(self.user_id)
         stats = count_statuses_by_student(self.user_id)
         attendances = count_lessons_for_group(user.group_id)
-        self.ui.latesValue.setText(str(stats['о']))
-        self.ui.absenceValue.setText(str(stats['н']))
+
+        if stats['о'] is not None:
+            self.ui.latesValue.setText(str(stats['о']))
+        else:
+            self.ui.latesValue.setText("0")
+
+        if stats['н'] is not None:
+            self.ui.absenceValue.setText(str(stats['н']))
+        else:
+            self.ui.absenceValue.setText("0")
+
         if (stats['н'] is None) or (attendances is None):
             self.ui.percentageOfAttendenceValue.setText("100 %")
         else:
-            self.ui.percentageOfAttendenceValue.setText(str((stats['н'] / attendances) * 100) + " %")
+            self.ui.percentageOfAttendenceValue.setText(f"{(((attendances - stats['н']) / attendances) * 100):.2f} %")
+
+        if (stats['о'] is None) or (attendances is None):
+            self.ui.percentageOfLatesValue.setText("0 %")
+        else:
+            self.ui.percentageOfLatesValue.setText(f"{((stats['о'] / attendances) * 100):.2f} %")
 
     def load_student_lates_table(self):
         statuses = get_lates_and_absences_by_date(self.user_id)
