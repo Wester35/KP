@@ -2,8 +2,8 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
-    QHeaderView
+from PySide6.QtWidgets import (QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy,
+                               QVBoxLayout, QHBoxLayout, QHeaderView)
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
                               save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
@@ -358,3 +358,11 @@ class MainApp(QWidget):
     def show_register_window(self):
         self.ui = Register()
         self.ui.show()
+
+    def closeEvent(self, event):
+        try:
+            if hasattr(self, "ui") and self.ui.isVisible():
+                self.ui.close()
+        except:
+            pass
+        super().closeEvent(event)
