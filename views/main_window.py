@@ -356,12 +356,12 @@ class MainApp(QWidget):
         self.load_teacher_table(group_id)
 
     def show_register_window(self):
-        self.ui = Register()
-        self.ui.show()
+        self.register_window = Register()
+        self.register_window.show()
 
     def closeEvent(self, event):
         try:
-            if hasattr(self, "ui") and self.ui.isVisible():
+            if hasattr(self, "register_window") and self.ui.isVisible():
                 self.ui.close()
         except:
             pass

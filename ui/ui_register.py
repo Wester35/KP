@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'registerMLPtUY.ui'
+## Form generated from reading UI file 'registernuirGy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -112,7 +112,7 @@ class Ui_Registration(object):
 "")
         self.frame = QFrame(Registration)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(70, 110, 401, 491))
+        self.frame.setGeometry(QRect(70, 110, 401, 561))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.label = QLabel(self.frame)
@@ -121,20 +121,34 @@ class Ui_Registration(object):
         self.label.setStyleSheet(u"")
         self.pushButton = QPushButton(self.frame)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(10, 415, 381, 61))
+        self.pushButton.setGeometry(QRect(10, 485, 381, 61))
         self.usernameEdit = QLineEdit(self.frame)
         self.usernameEdit.setObjectName(u"usernameEdit")
         self.usernameEdit.setGeometry(QRect(20, 130, 360, 22))
         self.passwordEdit = QLineEdit(self.frame)
         self.passwordEdit.setObjectName(u"passwordEdit")
-        self.passwordEdit.setGeometry(QRect(20, 340, 360, 22))
+        self.passwordEdit.setGeometry(QRect(20, 410, 360, 22))
         self.passwordEdit.setEchoMode(QLineEdit.EchoMode.Password)
+        self.checkPassword = QPushButton(self.frame)
+        self.checkPassword.setObjectName(u"checkPassword")
+        self.checkPassword.setGeometry(QRect(340, 400, 31, 31))
         self.fioEdit = QLineEdit(self.frame)
         self.fioEdit.setObjectName(u"fioEdit")
         self.fioEdit.setGeometry(QRect(20, 200, 360, 22))
         self.phoneEdit = QLineEdit(self.frame)
         self.phoneEdit.setObjectName(u"phoneEdit")
         self.phoneEdit.setGeometry(QRect(20, 270, 360, 22))
+        self.groupEdit = QLineEdit(self.frame)
+        self.groupEdit.setObjectName(u"groupEdit")
+        self.groupEdit.setGeometry(QRect(20, 340, 360, 22))
+        self.label.raise_()
+        self.pushButton.raise_()
+        self.usernameEdit.raise_()
+        self.passwordEdit.raise_()
+        self.fioEdit.raise_()
+        self.phoneEdit.raise_()
+        self.groupEdit.raise_()
+        self.checkPassword.raise_()
         self.frame_2 = QFrame(Registration)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(0, 0, 541, 700))
@@ -167,10 +181,13 @@ class Ui_Registration(object):
         self.passwordEdit.setInputMask("")
         self.passwordEdit.setText("")
         self.passwordEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Password", None))
+        self.checkPassword.setText("")
         self.fioEdit.setText("")
         self.fioEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Full name", None))
         self.phoneEdit.setText("")
         self.phoneEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Phone", None))
+        self.groupEdit.setText("")
+        self.groupEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Group", None))
         self.toolButton.setText("")
     # retranslateUi
 
