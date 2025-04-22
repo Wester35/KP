@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'registermKHhdT.ui'
+## Form generated from reading UI file 'registerMLPtUY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -132,9 +132,9 @@ class Ui_Registration(object):
         self.fioEdit = QLineEdit(self.frame)
         self.fioEdit.setObjectName(u"fioEdit")
         self.fioEdit.setGeometry(QRect(20, 200, 360, 22))
-        self.fioEdit_2 = QLineEdit(self.frame)
-        self.fioEdit_2.setObjectName(u"fioEdit_2")
-        self.fioEdit_2.setGeometry(QRect(20, 270, 360, 22))
+        self.phoneEdit = QLineEdit(self.frame)
+        self.phoneEdit.setObjectName(u"phoneEdit")
+        self.phoneEdit.setGeometry(QRect(20, 270, 360, 22))
         self.frame_2 = QFrame(Registration)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(0, 0, 541, 700))
@@ -169,8 +169,8 @@ class Ui_Registration(object):
         self.passwordEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Password", None))
         self.fioEdit.setText("")
         self.fioEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Full name", None))
-        self.fioEdit_2.setText("")
-        self.fioEdit_2.setPlaceholderText(QCoreApplication.translate("Registration", u"Phone", None))
+        self.phoneEdit.setText("")
+        self.phoneEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Phone", None))
         self.toolButton.setText("")
     # retranslateUi
 

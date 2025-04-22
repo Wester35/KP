@@ -27,20 +27,22 @@ class Register(QWidget):
         self.background.setPixmap(pixmap)
         self.background.setScaledContents(True)
 
+    def parse_fullname(self, full_name):
+        parts = full_name.strip().split()
+        return (
+            parts[0] if len(parts) > 0 else "",
+            parts[1] if len(parts) > 1 else "",
+            parts[2] if len(parts) > 2 else "",
+        )
 
     def handle_register(self):
         login = self.ui.usernameEdit.text()
+        last, first, middle = self.parse_fullname(self.ui.fioEdit.text())
+        phone = self.ui.phoneEdit.text()
         password = self.ui.passwordEdit.text()
 
-        if not login or not password:
+        if not login or not last or not first or not phone or not password:
             QMessageBox.warning(self, "Ошибка", "Введите логин и пароль!")
             return
 
-        db = SessionLocal()
         user = authenticate_user(db, login, password)
-
-        if user:
-            if self.ui.checkBox.isChecked():
-                save_user_session(user.id)
-        else:
-            QMessageBox.warning(self, "Ошибка", "Неверно")
