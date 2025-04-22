@@ -65,31 +65,41 @@ def check_if_logged_in():
         user_id = session_data.get("user_id")
         db = SessionLocal()
         user = db.query(User).filter(User.id == user_id).first()
+        db.close()
         if user:
             return user.id, user.is_teacher, user.is_admin
     return None, None, None
 
 
-def authenticate_user(session: Session, login, password):
+def authenticate_user(login, password):
+    session = SessionLocal()
     user = session.query(User).filter_by(login=login).first()
+    session.close()
     if user and check_password_hash(user.password, password):
         return user
     return None
 
 
-def add_attendance(session: Session, user_id, lesson_number, status):
+def add_attendance(user_id, lesson_number, status):
+    session = SessionLocal()
     entry = Journal(user_id=user_id, date=date.today(), lesson_number=lesson_number, status=status)
     session.add(entry)
     session.commit()
+    session.close()
     return entry
 
 
-def get_attendance_by_user(session: Session, user_id):
-    return session.query(Journal).filter_by(user_id=user_id).all()
+def get_attendance_by_user(user_id):
+    session = SessionLocal()
+    result = session.query(Journal).filter_by(user_id=user_id).all()
+    session.close()
+    return result
 
 
-def create_user(session: Session, last_name, first_name, middle_name, phone, login,
+def create_user(last_name, first_name, middle_name, phone, login,
                 password, group_id, is_teacher=False, is_admin=False):
+    session = SessionLocal()
+
     hashed_password = generate_password_hash(password)
     new_user = User(
         last_name=last_name,
@@ -104,11 +114,13 @@ def create_user(session: Session, last_name, first_name, middle_name, phone, log
     )
     session.add(new_user)
     session.commit()
+    session.close()
     return new_user
 
 
-def create_user_with_group(session: Session, last_name, first_name, middle_name, phone,
+def create_user_with_group(last_name, first_name, middle_name, phone,
                            login, password, group_name, is_teacher=False, is_admin=False):
+    session = SessionLocal()
     group = None
     if group_name is not None:
         group = session.query(Group).filter_by(name=group_name).first()
@@ -118,9 +130,8 @@ def create_user_with_group(session: Session, last_name, first_name, middle_name,
             session.commit()
 
     group_id = group.id if group else None
-
+    session.close()
     return create_user(
-        session=session,
         last_name=last_name,
         first_name=first_name,
         middle_name=middle_name,
