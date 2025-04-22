@@ -385,6 +385,19 @@ color:#696969;
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="registerStudentButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>540</y>
+      <width>341</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Register User</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QCalendarWidget" name="calendarWidget">
    <property name="geometry">
