@@ -361,8 +361,8 @@ class MainApp(QWidget):
 
     def closeEvent(self, event):
         try:
-            if hasattr(self, "register_window") and self.ui.isVisible():
-                self.ui.close()
+            if hasattr(self, "register_window") and self.register_window.isVisible():
+                self.register_window.close()
         except:
             pass
         super().closeEvent(event)

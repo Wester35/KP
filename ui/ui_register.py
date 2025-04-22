@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'registernuirGy.ui'
+## Form generated from reading UI file 'registerafzYnH.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -15,16 +15,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QToolButton, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QToolButton,
+    QWidget)
 
 class Ui_Registration(object):
     def setupUi(self, Registration):
         if not Registration.objectName():
             Registration.setObjectName(u"Registration")
-        Registration.resize(541, 700)
-        Registration.setMinimumSize(QSize(541, 700))
-        Registration.setMaximumSize(QSize(541, 700))
+        Registration.resize(541, 720)
+        Registration.setMinimumSize(QSize(541, 720))
+        Registration.setMaximumSize(QSize(541, 720))
         Registration.setStyleSheet(u"*\n"
 "{\n"
 "	font-family:century gothic;\n"
@@ -112,7 +113,7 @@ class Ui_Registration(object):
 "")
         self.frame = QFrame(Registration)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(70, 110, 401, 561))
+        self.frame.setGeometry(QRect(70, 110, 401, 591))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.label = QLabel(self.frame)
@@ -121,7 +122,7 @@ class Ui_Registration(object):
         self.label.setStyleSheet(u"")
         self.pushButton = QPushButton(self.frame)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(10, 485, 381, 61))
+        self.pushButton.setGeometry(QRect(10, 515, 381, 61))
         self.usernameEdit = QLineEdit(self.frame)
         self.usernameEdit.setObjectName(u"usernameEdit")
         self.usernameEdit.setGeometry(QRect(20, 130, 360, 22))
@@ -141,6 +142,9 @@ class Ui_Registration(object):
         self.groupEdit = QLineEdit(self.frame)
         self.groupEdit.setObjectName(u"groupEdit")
         self.groupEdit.setGeometry(QRect(20, 340, 360, 22))
+        self.checkBox = QCheckBox(self.frame)
+        self.checkBox.setObjectName(u"checkBox")
+        self.checkBox.setGeometry(QRect(20, 465, 171, 20))
         self.label.raise_()
         self.pushButton.raise_()
         self.usernameEdit.raise_()
@@ -149,11 +153,12 @@ class Ui_Registration(object):
         self.phoneEdit.raise_()
         self.groupEdit.raise_()
         self.checkPassword.raise_()
+        self.checkBox.raise_()
         self.frame_2 = QFrame(Registration)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(0, 0, 541, 700))
-        self.frame_2.setMinimumSize(QSize(541, 700))
-        self.frame_2.setMaximumSize(QSize(541, 700))
+        self.frame_2.setGeometry(QRect(0, 0, 541, 720))
+        self.frame_2.setMinimumSize(QSize(541, 720))
+        self.frame_2.setMaximumSize(QSize(541, 720))
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
         self.toolButton = QToolButton(Registration)
@@ -188,6 +193,7 @@ class Ui_Registration(object):
         self.phoneEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Phone", None))
         self.groupEdit.setText("")
         self.groupEdit.setPlaceholderText(QCoreApplication.translate("Registration", u"Group", None))
+        self.checkBox.setText(QCoreApplication.translate("Registration", u"\u041f\u0440\u0435\u043f\u043e\u0434\u0430\u0432\u0430\u0442\u0435\u043b\u044c?", None))
         self.toolButton.setText("")
     # retranslateUi
 
