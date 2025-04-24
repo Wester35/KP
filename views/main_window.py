@@ -2,13 +2,14 @@ import os
 import datetime
 from PIL import Image
 from PySide6.QtGui import QPixmap, QStandardItemModel, QStandardItem, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy, QVBoxLayout, QHBoxLayout, \
-    QHeaderView
+from PySide6.QtWidgets import (QWidget, QLabel, QMessageBox, QFileDialog, QSizePolicy,
+                               QVBoxLayout, QHBoxLayout, QHeaderView)
 from controllers.crud import (get_groups_from_db, get_students_with_journal,
                               update_or_create_journal_entry, delete_user_session, get_user_data_by_id,
                               save_image_path_to_db, update_or_create_log_entry, get_statuses_from_logs,
                               count_statuses_by_student, get_lates_and_absences_by_date, count_lessons_for_group)
 from ui.ui_main import Ui_MainWindow as UI_Main
+from views.register_window import Register
 from libs.delegates import ComboBoxDelegate
 
 
@@ -26,6 +27,7 @@ class MainApp(QWidget):
             self.ui.comboBox.setVisible(False)
             self.ui.calendarWidget.setVisible(False)
             self.ui.pair_teacher.setVisible(False)
+            self.ui.registerStudentButton.setVisible(False)
             self.resize(800, 780)
 
             main_layout = QVBoxLayout(self)
@@ -52,10 +54,10 @@ class MainApp(QWidget):
             if (not self.is_admin) and self.is_teacher:
                 self.ui.calendarWidget.setVisible(False)
                 self.ui.formLayoutWidget.setVisible(False)
+                self.ui.registerStudentButton.setVisible(False)
                 self.resize(1050, 780)
-            elif self.is_admin:
-                self.ui.formLayoutWidget.setVisible(False)
 
+            self.ui.formLayoutWidget.setVisible(False)
             self.ui.studentLatesView.setVisible(False)
 
             main_layout = QVBoxLayout(self)
@@ -99,6 +101,7 @@ class MainApp(QWidget):
         self.ui.logoutButton.clicked.connect(self.logout_user)
         self.ui.comboBox.currentIndexChanged.connect(self.on_group_selected)
         self.ui.calendarWidget.selectionChanged.connect(self.on_group_selected)
+        self.ui.registerStudentButton.clicked.connect(self.show_register_window)
 
         #Any
         self.photo = QLabel(self.ui.photo)
@@ -351,3 +354,15 @@ class MainApp(QWidget):
         group_id = self.ui.comboBox.currentData()
         self.load_journal_table(group_id)
         self.load_teacher_table(group_id)
+
+    def show_register_window(self):
+        self.register_window = Register()
+        self.register_window.show()
+
+    def closeEvent(self, event):
+        try:
+            if hasattr(self, "register_window") and self.register_window.isVisible():
+                self.register_window.close()
+        except:
+            pass
+        super().closeEvent(event)

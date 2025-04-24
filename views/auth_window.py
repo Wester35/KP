@@ -1,7 +1,6 @@
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QLineEdit
 from controllers.crud import authenticate_user, save_user_session
-from libs.database import SessionLocal
 from ui.ui_login import Ui_Authorization as LoginUI
 from views.main_window import MainApp
 
@@ -36,8 +35,7 @@ class Auth(QWidget):
             QMessageBox.warning(self, "Ошибка", "Введите логин и пароль!")
             return
 
-        db = SessionLocal()
-        user = authenticate_user(db, login, password)
+        user = authenticate_user(login, password)
 
         if user:
             if self.ui.checkBox.isChecked():

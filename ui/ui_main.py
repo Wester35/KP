@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiNbbBOl.ui'
+## Form generated from reading UI file 'uizADKyr.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -155,6 +155,9 @@ class Ui_MainWindow(object):
         self.groupValue = QLabel(self.frame)
         self.groupValue.setObjectName(u"groupValue")
         self.groupValue.setGeometry(QRect(160, 490, 573, 31))
+        self.registerStudentButton = QPushButton(self.frame)
+        self.registerStudentButton.setObjectName(u"registerStudentButton")
+        self.registerStudentButton.setGeometry(QRect(30, 540, 341, 41))
         self.calendarWidget = QCalendarWidget(MainWindow)
         self.calendarWidget.setObjectName(u"calendarWidget")
         self.calendarWidget.setGeometry(QRect(1150, 60, 341, 451))
@@ -246,6 +249,7 @@ class Ui_MainWindow(object):
         self.phoneValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.group.setText(QCoreApplication.translate("MainWindow", u"\u0413\u0440\u0443\u043f\u043f\u0430:", None))
         self.groupValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.registerStudentButton.setText(QCoreApplication.translate("MainWindow", u"Register User", None))
         self.lates.setText(QCoreApplication.translate("MainWindow", u"    \u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043e\u043f\u043e\u0437\u0434\u0430\u043d\u0438\u0439:", None))
         self.latesValue.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.absence.setText(QCoreApplication.translate("MainWindow", u"    \u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043e\u0432:", None))
