@@ -11,6 +11,7 @@ from controllers.crud import (get_groups_from_db, get_students_with_journal,
 from ui.ui_main import Ui_MainWindow as UI_Main
 from views.register_window import Register
 from libs.delegates import ComboBoxDelegate
+from controllers.base import *
 
 
 class MainApp(QWidget):
@@ -330,7 +331,7 @@ class MainApp(QWidget):
         if not file_path:
             return
 
-        save_dir = "libs/user_images"
+        save_dir = IMAGES_DIR
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 

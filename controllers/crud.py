@@ -9,22 +9,23 @@ from models.Group import Group
 from models.Journal import Journal
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime
+from controllers.base import SESSION_FILE
 
 
 def save_user_session(user_id):
-    with open("libs/user_session.json", "w") as f:
+    os.makedirs(os.path.dirname(SESSION_FILE), exist_ok=True)
+    with open(SESSION_FILE, "w", encoding="utf-8") as f:
         json.dump({"user_id": user_id}, f)
 
 
 def delete_user_session():
-    auth_file_path = "libs/user_session.json"
-    if os.path.exists(auth_file_path):
-        os.remove(auth_file_path)
+    if os.path.exists(SESSION_FILE):
+        os.remove(SESSION_FILE)
 
 
 def load_user_session():
     try:
-        with open("libs/user_session.json", "r") as f:
+        with open(SESSION_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
         return None
