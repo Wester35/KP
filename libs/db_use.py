@@ -1,4 +1,4 @@
-from libs.database import SessionLocal, engine
+from libs.database import engine
 from controllers.crud import create_user_with_group, create_user
 from libs.database import Base
 
