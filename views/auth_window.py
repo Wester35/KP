@@ -42,7 +42,7 @@ class Auth(QWidget):
                 save_user_session(user.id)
             self.show_main_window(user.id, user.is_teacher, user.is_admin)
         else:
-            QMessageBox.warning(self, "Ошибка", "Неверно")
+            QMessageBox.warning(self, "Ошибка", "Аккаунт не существует!")
 
     def show_main_window(self, user_id, is_teacher, is_admin):
         self.close()
