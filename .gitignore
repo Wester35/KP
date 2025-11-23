@@ -13,3 +13,7 @@ ui/__pycache__
 views/__pycache__
 *.pyc
 libs/.env
+db_tool.spec
+create_admin.spec
+program.spec
+dist/
